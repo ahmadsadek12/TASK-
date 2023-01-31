@@ -1,0 +1,152 @@
+    body{
+        background-color: rgb(200, 250, 250);
+    }
+
+    .white-bg{
+        box-shadow: 0 1px 12px 0 rgba(78, 96, 96, 0.5);
+        margin: 0 auto;
+        background-color: #ffffff !important;
+        width: 150px;
+        border-radius: 10px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 10px;
+        margin-top: 30px;
+    }
+
+    h6{
+        font-size: 12px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        border-bottom: 2px solid black;
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+
+    .specific-not{
+        display: inline-block;
+    }
+    
+    p{
+        font-size: 12px;
+    }
+
+    .username{
+        float: left;
+        padding-right: 10px;
+        font-weight: bold;
+    }
+
+    .action{
+        float: left;
+        padding-right: 10px;
+    }
+
+    .message{
+        float: right;
+    }
+
+    .date{
+        text-align: right;
+        margin-top: -10px;
+    }
+
+    .notification{
+        margin-top: -10px;
+    }
+
+    .reviews-button{
+        padding-left: 10px;
+        color: blue;
+    }
+
+    .reviews-button:visited{
+        color: blueviolet;
+    }
+
+    img {
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+        border-radius: 50%;
+        float: left;
+        margin-top: 15px;
+    }
+
+    .seen{
+        margin-bottom: 10px;
+    }
+
+    .new{
+        margin-top: 10px;
+    }
+
+    .buttons{
+        cursor: pointer;
+        border: solid 1.5px black;
+        border-radius: 60px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #000000;
+        font-size: 20px;
+        font-weight: 600;
+        padding: 3px;
+        cursor: pointer;
+        background-color: white;
+        font-size: 10px;
+        box-shadow: 1px 1px 3px 1px rgba(78, 96, 96, 0.5);
+    }
+
+    .reject:hover{
+        background-color: rgba(255, 0, 0, 0.5);
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .accept:hover{
+        background-color: rgba(0, 128, 0, 0.5);
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    a{
+        color: black;
+        cursor: pointer;
+    }
+
+    @media screen and (min-width: 400px) {
+    
+        .white-bg{
+            width: 300px;
+        }
+    
+        h6{
+            font-size: 12px;
+        }
+        
+        p{
+            font-size: 14px;
+        }
+    
+        .buttons{
+            padding: 5px;
+            font-size: 13px;
+        }
+    }
+
+    @media screen and (min-width: 650px) {
+
+        .white-bg{
+            width: 500px;
+        }
+    
+        h6{
+            font-size: 15px;
+        }
+
+        p{
+            font-size: 16px;
+        }
+    
+        .buttons{
+            padding: 8px;
+            font-size: 16px;
+        }
+
+    }
+

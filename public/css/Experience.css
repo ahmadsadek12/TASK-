@@ -1,0 +1,215 @@
+body{
+    background-color: rgb(200, 250, 250);
+    margin: 0 auto;
+    text-align: center;
+}
+
+form{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#form{
+    box-shadow: 0 1px 12px 0 rgba(78, 96, 96, 0.5);
+    background-color: white;
+     width: min-content;
+     height: 270px;
+     padding: 15px;
+     padding-left: 5px;
+     padding-right: 15px;
+     border: 1.5px solid black;
+     border-radius: 60px;
+     margin-top: 5%;
+     margin: 0 auto;
+     overflow-x: hidden;
+    overflow-y: auto;
+    font-size: 12px;
+}
+
+ #form::-webkit-scrollbar{
+    display: none;
+} 
+
+.choices{
+    border: solid 1px black;
+    border-radius: 20px;
+    padding: 5px;
+    margin-left: 10px;
+    line-height: 30px;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 5px;
+    padding-block-end: 0px;
+    padding-block-start: 0px;
+    margin-block-end: 5px;
+    display: inline-block;
+    box-shadow: 1px 1px 3px 1px rgba(78, 96, 96, 0.5);
+}
+
+h1{
+    font-size: 25px;
+}
+
+input:checked + .choices{
+    color: rgb(220, 150, 70);
+    border-color:   rgb(220, 150, 70);
+    box-shadow: 1px 1px 3px 1px rgba(220, 150, 70, 0.5);
+    border: solid 2px;
+}
+
+#CV-label{
+    font-size: 14px;
+    display: block;
+    margin-top: 20px;
+}
+
+#CV-image{
+    display: block;
+}
+
+#submit-label{
+    display: block;
+    border: solid 1px black;
+    border-radius: 10px;
+    background-color: rgba(230, 230, 230, 0.5);
+    width: fit-content;
+    padding: 5px;
+    margin: 0 auto;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#CV-image{
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#biography{
+    box-shadow: 0 1px 12px 0 rgba(78, 96, 96, 0.5);
+    resize: none;
+    width: 100px;
+    height: 70px;
+    font-size: 12px;
+    border: 1.5px solid black;
+    border-radius: 20px;
+    padding-left: 15px;
+    padding-right: 10px;
+}
+
+#textarea{
+    width: 100px;
+    margin: 0 auto;
+}
+
+.biography:focus::placeholder{
+    color: transparent;
+}
+
+.buttons{
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+    border: solid 1.5px black;
+    border-radius: 60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #000000;
+    font-size: 25px;
+    font-weight: 600;
+    padding: 8px;
+    cursor: pointer;
+    background-color: white;
+    font-size: 16px;
+    width: fit-content;
+    text-decoration: none;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    box-shadow: 1px 1px 3px 1px rgba(78, 96, 96, 0.5);
+}
+
+p{
+    font-size: 12px;
+}
+
+.buttons:hover{
+    background-color: #A8D5BAFF;
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+@media screen and (min-width: 320px) {
+    
+    #form{
+         width: 300px;
+         height: 270px;
+         padding: 15px;
+         padding-left: 10px;
+         padding-right: 10px;
+    }
+
+    #biography{
+        resize: none;
+        width: 300px;
+        height: 75px;
+    }
+
+    #textarea{
+        width: 300px;
+    }
+    
+    
+    h1{
+        font-size: 30px;
+    }
+    
+    #CV-label{
+        font-size: 16px;
+    }
+    
+    #CV-image{
+        display: block;
+    }
+}
+
+@media screen and (min-width: 500px) {
+    
+    #form{
+        width: 400px;
+        height: 320px;
+        padding: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
+        font-size: 16px;
+    }
+
+    #biography{
+        resize: none;
+        width: 400px;
+        height: 100px;
+    }
+    
+    p{
+        font-size: 16px;
+    }
+
+    #textarea{
+        width: 400px;
+    }
+
+    h1{
+        font-size: 40px;
+    }
+    
+    .choices{
+        margin-left: 20px;
+        line-height: 35px;
+        margin-block-end: 10px;
+    }
+
+    #CV-label{
+        font-size: 20px;
+    }
+    
+    #submit-label{
+        font-size: 16px;
+    }
+}
