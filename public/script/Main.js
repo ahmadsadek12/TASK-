@@ -1,155 +1,156 @@
-function myFunction() {
-    var x = document.getElementById("regular-1");
-    var y = document.getElementById("solid-1");
-    if (y.style.visibility === 'hidden') {
-        x.style.visibility = 'hidden';
-        y.style.visibility = 'visible';
-      }else {
-        x.style.visibility = 'visible';
-        y.style.visibility = 'hidden';
-      } 
+function myFunction(userId) {
+  var regular = document.getElementById("regular" + userId)
+  var solid = document.getElementById("solid" + userId)
+  regular.style.visibility = 'hidden';
+  solid.style.visibility = 'visible';
+  try {
+    fetch('/api/notification/create-notification', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        created_for: userId,
+        type_id: 2,
+      })
+    })
+      .then(notification => {
+        alert("You have successfully bookmarked this user. They will be notified of this action.");
+      })
+      .catch(error => {
+        alert(error);
+      });
+  } catch {
+    console.error(error);
   }
-
-  function myFunction1() {
-    var x = document.getElementById("regular-2");
-    var y = document.getElementById("solid-2");
-    if (y.style.visibility === 'hidden') {
-        x.style.visibility = 'hidden';
-        y.style.visibility = 'visible';
-      }else {
-        x.style.visibility = 'visible';
-        y.style.visibility = 'hidden';
-      } 
-  }
-
-  function myFunction2() {
-    var x = document.getElementById("regular-5");
-    var y = document.getElementById("solid-5");
-    if (y.style.visibility === 'hidden') {
-        x.style.visibility = 'hidden';
-        y.style.visibility = 'visible';
-      }else {
-        x.style.visibility = 'visible';
-        y.style.visibility = 'hidden';
-      } 
-  }
-
-  function myFunction3() {
-    var x = document.getElementById("regular-3");
-    var y = document.getElementById("solid-3");
-    if (y.style.visibility === 'hidden') {
-        x.style.visibility = 'hidden';
-        y.style.visibility = 'visible';
-      }else {
-        x.style.visibility = 'visible';
-        y.style.visibility = 'hidden';
-      } 
-  }
-
-  function myFunction4() {
-    var x = document.getElementById("regular-4");
-    var y = document.getElementById("solid-4");
-    if (y.style.visibility === 'hidden') {
-        x.style.visibility = 'hidden';
-        y.style.visibility = 'visible';
-      }else {
-        x.style.visibility = 'visible';
-        y.style.visibility = 'hidden';
-      } 
-  }
-
-  function nextButton() {
-    var i = $('input[name=pages]:checked').val();
-    var index = parseInt(i) + 1;
-    $('#page' + index).prop('checked', true);
 }
 
-function prevButton() {
-    var i = $('input[name=pages]:checked').val();
-    var index = parseInt(i) - 1;
-    $('#page' + index).prop('checked', true);
+function myFunction2(userId) {
+  var regular = document.getElementById("regular" + userId)
+  var solid = document.getElementById("solid" + userId)
+  solid.style.visibility = 'hidden';
+  regular.style.visibility = 'visible';
 }
 
-  function prevFunction(){
-     var x = document.getElementById("prev-button");
-     var y = document.getElementById("page1");
-     var z = document.getElementById("page2");
-     var a = document.getElementById("page3");
-     var b = document.getElementById("page4");
-     var c = document.getElementById("page5");
 
-      if(y.checked){
-        x.style.visibility = "hidden";
+function showPopUp(user) {
+  const userId = user.id;
+  fetch('/api/user/users/' + userId)
+    .then(response => response.json())
+    .then(user => {
+      var popup = document.getElementById("popup");
+
+      var thumb = popup.querySelector(".pop-thumb img");
+      var heartIcon = popup.querySelector(".pop-heart i");
+      var popRatingText = popup.querySelector(".pop-rating");
+      var rating = user.averageRating;
+      var names = popup.querySelector(".pop-names");
+      var category = popup.querySelectorAll(".pop-information li")[0];
+      var location = popup.querySelectorAll(".pop-information li")[1];
+      var hireButton = popup.querySelector(".pop-buttons");
+
+      if (rating == 0) {
+        heartIcon.style.backgroundImage = "linear-gradient(white, white, white, white, white)";
       }
-      else if(z.checked || a.checked || b.checked || c.checked){
-        x.style.visibility = 'visible';
+      else if (rating <= 1) {
+        heartIcon.style.backgroundImage = "linear-gradient(white, white, white, white, red)";
       }
+      else if (rating <= 2) {
+        heartIcon.style.backgroundImage = "linear-gradient(white, white, white, red, red)";
+      }
+      else if (rating <= 3) {
+        heartIcon.style.backgroundImage = "linear-gradient(white, white, red, red, red)";
+      }
+      else if (rating <= 4) {
+        heartIcon.style.backgroundImage = "linear-gradient(white, red, red, red, red)";
+      }
+      else if (rating <= 5) {
+        heartIcon.style.backgroundImage = "linear-gradient(red, red, red, red, red)";
+      }
+
+      hireButton.dataset.user = userId;
+      thumb.src = (user.gender === "Male" ? "https://bootdey.com/img/Content/avatar/avatar2.png" : "https://bootdey.com/img/Content/avatar/avatar3.png");
+      names.textContent = user.firstName + " " + user.lastName;
+      popRatingText.textContent = user.averageRating.toFixed(1) + "/5";
+      if (rating == 0) {
+        popRatingText.textContent = "-/5";
+      }
+      heartIcon.setAttribute("id", "h" + user.id);
+      // heartLink.setAttribute("href", "/Reviews/" + user.id);
+      const experienceArr = user.experience;
+      var experienceString = '';
+      for (let i = 0; i < experienceArr.length; i++) {
+        experienceString += experienceArr[i].charAt(0).toUpperCase() + experienceArr[i].substring(1) + ', ';
+      }
+      category.textContent = experienceString.substring(0, experienceString.length - 2);
+      location.textContent = user.country;
+      hireButton.setAttribute("id", "hire-" + user.id);
+
+      if (popup.style.display === 'none') {
+        popup.style.display = "block";
+      }
+    })
+    .catch(error => console.error(error));
+}
+
+function closePopup() {
+  var popup = document.getElementById("popup");
+
+  popup.style.display = 'none';
+  table.style.filter = 'none';
+  layout.style.filter = 'none';
+}
+
+function fixhearts(heart, rating) {
+  if (Math.parseInt(rating) == 0) {
+    heart.style.backgroundImage = "linear-gradient(white, white, white, white, white)";
   }
-
-  function showPopUp(){
-     var popup = document.getElementById("popup");
-     var n1 = document.getElementById("name1");
-     var n2 = document.getElementById("name2");
-     var n3 = document.getElementById("name3");
-     var n4 = document.getElementById("name4");
-     var n5 = document.getElementById("name5");
-     var table = document.getElementById("table");
-
-     if(name1.checked || name2.checked || name3.checked || name4.checked || name5.checked){
-      popup.style.display = "block";
-      table.style.filter = "blur(5px)"
-     }
-     else{
-      popup.style.display = "none";
-      table.style.filter = "blur(0px)"
-     }
+  if (Math.parseInt(rating) == 1) {
+    heart.style.backgroundImage = "linear-gradient(white, white, white, white, red)";
   }
-
-  window.onload = function heartFunction(){
-    var heartString1 = document.getElementById("heart-1");
-    var heartString2 = document.getElementById("heart-2");
-    var heartString3 = document.getElementById("heart-3");
-    var heartString4 = document.getElementById("heart-4");
-    var heartString5 = document.getElementById("heart-5");
-    var heartString6 = document.getElementById("heart-6");
-    var heart1 = document.getElementById("h1");
-    var heart2 = document.getElementById("h2");
-    var heart3 = document.getElementById("h3");
-    var heart4 = document.getElementById("h4");
-    var heart5 = document.getElementById("h5");
-    var heart6 = document.getElementById("h6");
-    
-
-    var heartAmmount1 = heartString1.textContent.charAt(0);
-    var heartAmmount2 = heartString2.textContent.charAt(0);
-    var heartAmmount3 = heartString3.textContent.charAt(0);
-    var heartAmmount4 = heartString4.textContent.charAt(0);
-    var heartAmmount5 = heartString5.textContent.charAt(0);
-    var heartAmmount6 = heartString6.textContent.charAt(0);
-
-    fixHeart(heartAmmount1, heart1)
-    fixHeart(heartAmmount2, heart2)
-    fixHeart(heartAmmount3, heart3)
-    fixHeart(heartAmmount4, heart4)
-    fixHeart(heartAmmount5, heart5)
-    fixHeart(heartAmmount6, heart6)
+  if (Math.parseInt(rating) == 2) {
+    heart.style.backgroundImage = "linear-gradient(white, white, white, red, red)";
   }
-
-  function fixHeart(hString, h){
-    var reds=0;
-    var whites = 0;
-    var temp = "";
-
-    reds = parseFloat(hString)/0.5;
-    whites = 10-reds;
-
-    for (let index = 0; index < whites; index++) {
-      temp+= "white, ";
-    }
-
-    for (let index = 0; index < reds; index++) {
-      temp+= "red, ";
-    }
-    
-    h.style.backgroundImage = linear-gradient(temp.slice(0, -2));
+  if (Math.parseInt(rating) == 3) {
+    heart.style.backgroundImage = "linear-gradient(white, white, red, red, red)";
   }
+  if (Math.parseInt(rating) == 4) {
+    heart.style.backgroundImage = "linear-gradient(white, red, red, red, red)";
+  }
+  if (Math.parseInt(rating) == 5) {
+    heart.style.backgroundImage = "linear-gradient(red, red, red, red, red)";
+  }
+}
+
+function showPartial() {
+  var bars = document.getElementById("mobile-demo")
+  if (bars.style.display === "block") {
+    bars.style.display = "none"
+  } else {
+    bars.style.display = "block"
+  }
+}
+
+
+function hireUser(button) {
+  const userId = button.dataset.user; // Replace `user.id` with the ID of the specific user
+  try {
+    fetch('/api/notification/hire', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        hired_id: userId
+      })
+    })
+      .then(notification => {
+        alert("You have successfully sent a request to hire the user. They will be notified and when they respond you will be notified as well.");
+      })
+      .catch(error => {
+        alert(error);
+      });
+  } catch {
+    console.error(error);
+  }
+}

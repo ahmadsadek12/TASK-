@@ -1,0 +1,35 @@
+.partial-word {
+    text-decoration: none;
+    color: black;
+    margin-left: 10px;
+}
+
+.nav-wrapper {
+    margin: 0 auto;
+    width: 50%;
+    background-color: white;
+    border-radius: 60px;
+    height: 60px;
+}
+
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-wrapper ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-wrapper li {
+    margin: 0 10px;
+}
+
+.nav-wrapper a {
+    display: flex;
+    align-items: center;
+}

@@ -1,45 +1,117 @@
+<div class="white-bg">
 
-
-  <div class="white-bg">
-    <h6>New</h6>
-    <div class="old">
-      <div class="notification">
-        <div class="specific-not">
-          <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-          <a href="/Profiles"><p class="username">ahmadsadek12 </p></a><p class="action">Bookmarked you.</p><p class="message"></p>
-        </div>
-        <p class="date">1 h</p>
-      </div>
-
-      <div class="notification">
-        <div class="specific-not">
-          <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-          <a href="/Profiles"> <p class="username">helloiam </p></a><p class="action">Reviewed you: </p><p class="message">I like vrfaev vfraeb brteba gvreb gbteab bvtfeab bvteb bteb vfeb btqb bteqb grq3h bteab.</p>
-        </div>
-        <p class="date">1 d</p>
-      </div>
-    </div>
-    <div class="new">
-      <h6 class="seen">Seen</h6>
-      <div class="notification">
-        <div class="specific-not">
-          <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-          <a href="/Profiles"><p class="username">ahmadsadek12 </p></a><p class="action">Requested to hire you.</p><p class="message"></p> 
-        </div>
-        <div class="buttons-div">
-          <button class="accept buttons">Accept</button>
-          <button class="reject buttons">Reject</button>
-        </div>
-        <p class="date">1 w</p>
-      </div>
-
-      <div class="notification">
-        <div class="specific-not">
-          <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-          <a href="/Profiles"><p class="username">tala.has.a.beanie </p></a><p class="action">Rated you. <a href="/Reviews" class="reviews-button">Click to see.</a></p>
-        </div>
-        <p class="date">1 w</p>
-      </div>
-    </div>
+  <div class="top-select">
+    <input type="radio" onclick="notifs(); noNotifClick()" id="hire" name="notifs" class="select-notif" hidden checked>
+    <label for="hire" class="select-notif-label">
+      Hire requests&nbsp 
+    </label>
+    |&nbsp
+    <input type="radio" onclick="notifs(); noNotifClick()" id="reviews" name="notifs" class="select-notif" hidden>
+    <label for="reviews" class="select-notif-label">
+      Reviews&nbsp 
+    </label>
+    |&nbsp
+    <input type="radio" onclick="notifs(); noNotifClick()" id="bookmarks" name="notifs" class="select-notif" hidden>
+    <label for="bookmarks" class="select-notif-label">
+      Bookmarks
+    </label>
   </div>
-          
+  <hr>
+
+  <div class="old" id="hire-notifs" onload="noNotif()">
+    {{#each notifs}}
+    {{#if (eq type_id 1)}}
+    <div class="notification">
+      <div class="specific-not">
+        {{#ifEqual creator.user_gender "Male"}}
+        <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+        {{else}}
+        <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+        {{/ifEqual}}
+        <a href="/Profiles{{creator.user_id}}">
+          <p class="username">{{creator.user_full_name}}</p>
+        </a>
+        <p class="action">has requested to hire you.</p>
+        <div class="notification-buttons" data-notif="{{_id}}" data-user="{{creator.user_id}}">
+          <button class="btn btn-success" onclick="replyToRequest(event, 1)" type="button">Accept</button>
+          <button class="btn btn-danger" onclick="replyToRequest(event, 0)" type="button">Reject</button>
+        </div>
+      </div>
+      <p class="date">{{formatDate this.createdAt 'DD/MM/YY'}}</p>
+    </div>
+    {{/if}}
+    {{#if (eq type_id 4)}}
+    <div class="notification">
+      <div class="specific-not">
+        {{#ifEqual creator.user_gender 'Male'}}
+        <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+        {{else}}
+        <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+        {{/ifEqual}}
+        <a href="/Profiles/{{creator.user_id}}">
+          <p class="username">{{creator.user_full_name}} </p>
+        </a>
+        <p class="action">responded to your hire request:</p>
+        <p>{{extra_data.response}}</p>
+        {{#ifEqual extra_data.response "Hire request accepted."}}
+        <p style="font-weight: bold;">Please contact at: {{creator.user_phoneNumber}}</p>
+        {{else}}
+        {{/ifEqual}}
+      </div>
+      <p class="date">{{formatDate this.createdAt 'DD/MM/YY'}}</p>
+    </div>
+    {{/if}}
+    {{else}}
+    {{/each}}
+  </div>
+  <div class="old" id="bookmark-notifs" onload="noNotif()" hidden>
+    {{#each notifs}}
+    {{#if (eq type_id 2)}}
+    <div class="notification">
+      <div class="specific-not">
+        {{#ifEqual creator.user_gender 'Male'}}
+        <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+        {{else}}
+        <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+        {{/ifEqual}}
+        <a href="/Profiles/{{creator.user_id}}">
+          <p class="username">{{creator.user_full_name}} </p>
+        </a>
+        <p class="action">Bookmarked you.</p>
+        <p class="message"></p>
+      </div>
+      <p class="date">{{formatDate this.createdAt 'DD/MM/YY'}}</p>
+    </div>
+    {{/if}}
+    {{else}}
+    {{/each}}
+  </div>
+  <div class="old" id="reviews-notifs" onload="noNotif()" hidden>
+    {{#each notifs}}
+    {{#if (eq type_id 3)}}
+    <div class="notification">
+      <div class="specific-not">
+        {{#ifEqual creator.user_gender 'Male'}}
+        <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+        {{else}}
+        <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+        {{/ifEqual}}
+        <a href="/Profiles/{{creator.user_id}}">
+          <p class="username">{{creator.user_full_name}} </p>
+        </a>
+        <p class="action">Reviewed you: </p>
+        {{!-- {{#if (lengthGT extra_data.review_text 200)}}
+        <p class="message">{{extra_data.review_text}}</p>
+        {{else}}
+        <p class="message"></p>
+        {{/if}} --}}
+        <p class="message">{{extra_data.review_text}}</p>
+      </div>
+      <p class="date">{{formatDate this.createdAt 'DD/MM/YY'}}</p>
+    </div>
+    {{/if}}
+    {{else}}
+    {{/each}}
+  </div>
+
+</div>

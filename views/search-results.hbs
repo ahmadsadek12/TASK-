@@ -1,0 +1,111 @@
+<div id="search-results"></div>
+<div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
+  <h1>Search results:</h1>
+  <table class="table manage-candidates-top mb-0" id="table">
+    <tbody>
+      {{#each users.docs}}
+      <tr class="candidates-lbuttonsist">
+        <td class="title">
+          <div class="thumb">
+            {{#ifEqual this.gender 'Male'}}
+            <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+            {{else}}
+            <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+            {{/ifEqual}}
+          </div>
+          <div class="candidate-list-details">
+            <div class="candidate-list-info">
+              <div class="candidate-list-title">
+                <h5 class="mb-0"><input type="radio" name="names" onclick="showPopUp(this)" id="{{this._id}}"
+                    hidden></input>
+                  <label for="{{this._id}}" class="names">{{this.firstName}} {{this.lastName}}</label>
+                </h5>
+              </div>
+              <div class="candidate-list-option">
+                <ul class="information">
+                  <li><i class="fas fa-filter pr-1"></i>{{this.experience}}</li>
+                  <li><i class="fas fa-map-marker-alt pr-1"></i>&thinsp;{{this.country}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class="candidate-list-favourite-time text-center">
+          {{#ifEqual this.averageRating '0'}}
+          <span class="candidate-list-time order-1" id="heart-{{this._id}}">-/5</span>
+          {{else}}
+          <span class="candidate-list-time order-1" id="heart-{{this._id}}">{{toFixed this.averageRating 1}}/5</span>
+          {{/ifEqual}}
+          {{#if (eq this.averageRating 0)}}
+          <a href="/Reviews/{{this._id}}" class="candidate-list-favourite order-2 text-danger"><i class="fas fa-heart"
+              style="background-image: linear-gradient(white, white, white, white, white);"></i></a>
+          {{else if (lte this.averageRating 1)}}
+          <a href="/Reviews/{{this._id}}" class="candidate-list-favourite order-2 text-danger"><i class="fas fa-heart"
+              style="background-image: linear-gradient(white, white, white, white, red);"></i></a>
+          {{else if (lte this.averageRating 2)}}
+          <a href="/Reviews/{{this._id}}" class="candidate-list-favourite order-2 text-danger"><i class="fas fa-heart"
+              style="background-image: linear-gradient(white, white, white, red, red);"></i></a>
+          {{else if (lte this.averageRating 3)}}
+          <a href="/Reviews/{{this._id}}" class="candidate-list-favourite order-2 text-danger"><i class="fas fa-heart"
+              style="background-image: linear-gradient(white, white, red, red, red);"></i></a>
+          {{else if (lte this.averageRating 4)}}
+          <a href="/Reviews/{{this._id}}" class="candidate-list-favourite order-2 text-danger"><i class="fas fa-heart"
+              style="background-image: linear-gradient(white, red, red, red, red);"></i></a>
+          {{else if (lte this.averageRating 5)}}
+          <a href="/Reviews/{{this._id}}" class="candidate-list-favourite order-2 text-danger"><i class="fas fa-heart"
+              style="background-image: linear-gradient(red, red, red, red, red);"></i></a>
+          {{/if}}
+        </td>
+        <td>
+          <ul class="list-unstyled mb-0 d-flex justify-content-end">
+            <a onclick="myFunction('{{this._id}}')" id="regular{{this.id}}" class="text-primary" data-toggle="tooltip"
+              title="" data-original-title="bookmark"><i class="fa-regular fa-bookmark"></i></a>
+            <a onclick="myFunction2('{{this.id}}')" id="solid{{this.id}}" class="text-primary" data-toggle="tooltip"
+              title="" data-original-title="bookmark" style="visibility: hidden;"><i
+                class="fa-solid fa-bookmark"></i></a>
+          </ul>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  <nav>
+    <ul class="pagination">
+      {{#if users.hasPrevPage}}
+      <li class="page-item">
+        <a href="?page={{users.prevPage}}" class="page-link"
+          style="text-decoration: none; color: rgb(200, 130, 0);">Previous</a>
+      </li>
+      {{else}}
+
+      {{/if}}
+
+      {{#if users.hasNextPage}}
+      <li class="page-item">
+        <a href="?page={{users.nextPage}}" class="page-link"
+          style="text-decoration: none; color: rgb(200, 130, 0);">Next</a>
+      </li>
+      {{else}}
+
+      {{/if}}
+    </ul>
+  </nav>
+
+  <div id="popup" class="popup" style="display: none;">
+    <input type="radio" name="names" onclick="closePopup()" id="close" hidden>
+    <label for="close"><i class="fa-solid fa-xmark"></i></label>
+    <div class="pop-thumb">
+      <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+    </div>
+    <td class="pop-fav">
+      <span class="pop-rating" id="heart-6"></span>
+      <a href="/Reviews/{{this._id}}" class="pop-heart"><i class="fas fa-heart"></i></a>
+    </td>
+    <h5 class="pop-names"></h5>
+    <ul class="pop-information">
+      <li><i class="fas fa-filter pr-1"></i></li>
+      <li><i class="fas fa-map-marker-alt pr-1"></i></li>
+    </ul>
+    <button class="pop-buttons" data-user="null" onclick="hireUser(this)">Hire!</button>
+  </div>

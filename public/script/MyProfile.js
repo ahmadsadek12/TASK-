@@ -17,7 +17,7 @@ function ExperienceButton() {
     var button = document.getElementById("experience-button");
     if (worker.checked) {
         button.style.display = "block";
-    } else{
+    } else {
         button.style.display = "none";
     }
 }
@@ -28,8 +28,24 @@ window.onload = function newFunction() {
     var button = document.getElementById("experience-button");
     if (worker.checked) {
         button.style.display = "block";
-    } else{
+    } else {
         button.style.display = "none";
     }
 }
+
+function toggleOtherInput() {
+    var otherInput = document.getElementById('other-input');
+    if (document.getElementById('other-radio').checked) {
+        otherInput.style.display = 'block';
+    } else {
+        otherInput.style.display = 'none';
+    }
+}
+
+flatpickr("#datepicker", {
+    dateFormat: "d/m/Y", // specify your desired date format
+    // additional options and configurations for Flatpickr can be added here
+});
+
+
 

@@ -1,27 +1,38 @@
-
-
-    <form>
-        <h3>Ahmad Sadek, 21, Male</h3>
-        <h3 class="type-text" id="user-type">Worker</h3>
-        <div id="form">
-            <p class="username">ahmadsadek12</p>
-            <div class="thumb">
-                <label for="img-input">
-                    <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-                </label>
-            </div>
-            <div class="rating">
-                <i class="fas fa-heart" id="heart1"></i> <i class="fas fa-heart" id="heart2"></i> <i class="fas fa-heart" id="heart3"></i> <i class="fas fa-heart" id="heart4"></i> <i class="fas fa-heart" id="heart5"></i>
-            </div>
-            <div class="contact-info">
-                <p class="contact-label">Contact info:</p>
-                <p class="phone-number">+961 76 891 114</p>
-            </div>
-            <div class="type">
-                <div id="experience">
-                    <p class="experience-label">Experience:</p>
-                    <p class="experience" id="user-experience">Manager, Programming, Sales, Software engineering, Event planning</p>
-                </div>
-            </div>
-            <button class="buttons" id="button">Hire!</button>
-    </form>
+<h3>{{user.firstName}} {{user.lastName}}, {{user.gender}}</h3>
+<h3 class="type-text" id="user-type">Worker</h3>
+<div id="form">
+    <p class="username">{{user.firstName}} {{user.lastName}}</p>
+    <div class="thumb">
+        <label for="img-input">
+            {{#ifEqual user.gender 'Male'}}
+            <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+            {{else}}
+            <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+            {{/ifEqual}}
+        </label>
+    </div>
+    <div class="rating">
+        {{#if user.averageRating}}
+        {{#times user.averageRating}}
+        <i class="fas fa-heart" id="heart2"></i>
+        {{/times}}
+        {{/if}}
+    </div>
+    <div class="contact-info">
+        <p class="contact-label">Contact info:</p>
+        <p class="phone-number">{{user.phoneNumber}}, {{user.email}}</p>
+    </div>
+    <div class="type">
+        <div id="experience">
+            <p class="experience-label">Experience:</p>
+            <p class="experience" id="user-experience">{{user.experience}}</p>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: space-evenly">
+        <a href="/Main" class="buttons">Home</a>
+        <a href="/Reviews/{{user._id}}" class="buttons">View reviews</a>
+        {{#ifEqual userData.userType 1}}
+        <button class="buttons" id="hire-button" onclick="hireUser('{{user._id}}')">Hire!</button>
+        {{else}}
+        {{/ifEqual}}
+    </div>

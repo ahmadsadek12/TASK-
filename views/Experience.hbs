@@ -1,73 +1,87 @@
 <h1>Task!</h1>
-<form>
+<form action="/api/user/{{userData._id}}/update" method="POST">
     <div id="textarea">
         <p id="bio-label">Write a bio for your profile and then pick specialties you might have <em>(optional)</em>.</p>
-        <textarea name="biography" id="biography" maxlength="5000" placeholder="Write your bio here..."></textarea>
+        <textarea name="biography" id="biography" maxlength="5000" placeholder="Write your bio here...">{{userData.biography}}</textarea>
     
     <div id="form">
-        <input type="checkbox" name="nurse" id="nurse" hidden>
+        <input type="checkbox" value="nurse" id="nurse" name="experience[]" hidden>
         <label class="choices" id="nurse-label" for="nurse">Nurse</label>
-        <input type="checkbox" name="construction" id="construction" hidden>
+        <input type="checkbox" value="construction" id="construction" name="experience[]" hidden>
         <label class="choices" id="construction-label" for="construction">Construction</label>
-        <input type="checkbox" name="cleaning" id="cleaning" hidden>
+        <input type="checkbox" value="cleaning" id="cleaning" name="experience[]" hidden>
         <label class="choices" id="cleaning-label" for="cleaning">Cleaning</label>
-        <input type="checkbox" name="cook" id="cook" hidden>
+        <input type="checkbox" value="cook" id="cook" name="experience[]" hidden>
         <label class="choices" id="cook-label" for="cook">Cook</label>
-        <input type="checkbox" name="mechanic" id="mechanic" hidden>
+        <input type="checkbox" value="mechanic" id="mechanic" name="experience[]" hidden>
         <label class="choices" id="mechanic-label" for="mechanic">Mechanic</label>
-        <input type="checkbox" name="plumber" id="plumber" hidden>
+        <input type="checkbox" value="plumber" id="plumber" name="experience[]" hidden>
         <label class="choices" id="plumber-label" for="plumber">Plumber</label>
-        <input type="checkbox" name="driver" id="driver" hidden>
+        <input type="checkbox" value="driver" id="driver" name="experience[]" hidden>
         <label class="choices" id="driver-label" for="driver">Driver</label>
-        <input type="checkbox" name="truck-driver" id="truck-driver" hidden>
+        <input type="checkbox" value="truck-driver" id="truck-driver" name="experience[]" hidden>
         <label class="choices" id="truck-driver-label" for="truck-driver">Truck driver</label>
-        <input type="checkbox" name="pt" id="pt" hidden>
+        <input type="checkbox" value="pt" id="pt" name="experience[]" hidden>
         <label class="choices" id="pt-label" for="pt">Personal trainer</label>
-        <input type="checkbox" name="tutor" id="tutor" hidden>
+        <input type="checkbox" value="tutor" id="tutor" name="experience[]" hidden>
         <label class="choices" id="tutor-label" for="tutor">Tutoring</label>
-        <input type="checkbox" name="languages" id="languages" hidden>
+        <input type="checkbox" value="languages" id="languages" name="experience[]" hidden>
         <label class="choices" id="languages-label" for="languages">Languages</label>
-        <input type="checkbox" name="math" id="math" hidden>
+        <input type="checkbox" value="math" id="math" name="experience[]" hidden>
         <label class="choices" id="math-label" for="math">Math</label>
-        <input type="checkbox" name="physics" id="physics" hidden>
+        <input type="checkbox" value="physics" id="physics" name="experience[]" hidden>
         <label class="choices" id="physics-label" for="physics">Physics</label>
-        <input type="checkbox" name="chemistry" id="chemistry" hidden>
+        <input type="checkbox" value="chemistry" id="chemistry" name="experience[]" hidden>
         <label class="choices" id="chemistry-label" for="chemistry">Chemistry</label>
-        <input type="checkbox" name="biology" id="biology" hidden>
+        <input type="checkbox" value="biology" id="biology" name="experience[]" hidden>
         <label class="choices" id="biology-label" for="biology">Biology</label>
-        <input type="checkbox" name="repair" id="repair" hidden>
+        <input type="checkbox" value="repair" id="repair" name="experience[]" hidden>
         <label class="choices" id="repair-label" for="repair">Repair person</label>
-        <input type="checkbox" name="waiter" id="waiter" hidden>
+        <input type="checkbox" value="waiter" id="waiter" name="experience[]" hidden>
         <label class="choices" id="waiter-label" for="waiter">Waiter/Waitress</label>
-        <input type="checkbox" name="bartending" id="bartending" hidden>
+        <input type="checkbox" value="bartending" id="bartending" name="experience[]" hidden>
         <label class="choices" id="bartending-label" for="bartending">Bartending</label>
-        <input type="checkbox" name="painter" id="painter" hidden>
+        <input type="checkbox" value="painter" id="painter" name="experience[]" hidden>
         <label class="choices" id="painter-label" for="painter">Painter</label>
-        <input type="checkbox" name="makeup" id="makeup" hidden>
+        <input type="checkbox" value="makeup" id="makeup" name="experience[]" hidden>
         <label class="choices" id="makeup-label" for="makeup">Makeup artist</label>
-        <input type="checkbox" name="hairdresser" id="hairdresser" hidden>
+        <input type="checkbox" value="hairdresser" id="hairdresser" name="experience[]" hidden>
         <label class="choices" id="hairdresser-label" for="hairdresser">Hairdresser</label>
-        <input type="checkbox" name="manicurist" id="manicurist" hidden>
+        <input type="checkbox" value="manicurist" id="manicurist" name="experience[]" hidden>
         <label class="choices" id="manicurist-label" for="manicurist">Manicurist </label>
-        <input type="checkbox" name="masseuse" id="masseuse" hidden>
+        <input type="checkbox" value="masseuse" id="masseuse" name="experience[]" hidden>
         <label class="choices" id="masseuse-label" for="masseuse">Masseuse/Masseur</label>
-        <input type="checkbox" name="gardener" id="gardener" hidden>
+        <input type="checkbox" value="gardener" id="gardener" name="experience[]" hidden>
         <label class="choices" id="gardener-label" for="gardener">Gardener</label>
-        <input type="checkbox" name="baker" id="baker" hidden>
+        <input type="checkbox" value="baker" id="baker" name="experience[]" hidden>
         <label class="choices" id="baker-label" for="baker">Baker</label>
-        <input type="checkbox" name="planner" id="planner" hidden>
+        <input type="checkbox" value="planner" id="planner" name="experience[]" hidden>
         <label class="choices" id="planner-label" for="planner">Event planner</label>
-        <input type="checkbox" name="photographer" id="photographer" hidden>
+        <input type="checkbox" value="photographer" id="photographer" name="experience[]" hidden>
         <label class="choices" id="photographer-label" for="photographer">Photographer</label>
-        <input type="checkbox" name="programmer" id="programmer" hidden>
+        <input type="checkbox" value="programmer" id="programmer" name="experience[]" hidden>
         <label class="choices" id="programmer-label" for="programmer">Programmer</label>
-        <input type="checkbox" name="tech-repair" id="tech-repair" hidden>
+        <input type="checkbox" value="tech-repair" id="tech-repair" name="experience[]" hidden>
         <label class="choices" id="tech-repair-label" for="tech-repair">Computer repair</label>
-        <input type="checkbox" name="carpenter" id="carpenter" hidden>
+        <input type="checkbox" value="carpenter" id="carpenter" name="experience[]" hidden>
         <label class="choices" id="carpenter-label" for="carpenter">Carpenter</label>
-        <input type="checkbox" name="handyperson" id="handyperson" hidden>
+        <input type="checkbox" value="handyperson" id="handyperson" name="experience[]" hidden>
         <label class="choices" id="handyperson-label" for="handyperson">Handyperson</label>
     </div>
-    <a class="buttons" id="signup" href="/SignIn">Save & Continue</a> 
+    <div class="bottomBtns">
+    <a class="buttons" style="margin-right: 10px" href="/MyProfile">My Profile</a>
+    <button type="submit" class="buttons" id="signup">Save & Continue</a> 
+    </div>
 </div>
 </form>
+
+<script>
+const userDataExp = "{{userData.experience}}";
+const experience = userDataExp.split(",");
+experience.forEach(exp => {
+  const checkbox = document.getElementById(exp);
+  if (checkbox) {
+    checkbox.checked = true;
+  }
+});
+</script>

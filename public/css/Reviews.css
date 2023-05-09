@@ -1,4 +1,5 @@
 body{
+    background-color: rgb(200, 250, 250);
     text-align: center;
 }
 
@@ -49,12 +50,29 @@ img{
 }
 
 .reviews{
-    width: 85%;
+    background-color: white;
+    overflow-y: scroll;
+    width: 50px;
+    height: 150px;
     border: 1px solid black;
     padding: 10px;
     border-radius: 30px;
     box-shadow: 0 1px 5px 0 black;
 }
+
+.reviews::-webkit-scrollbar{
+   width: 10px;
+}
+
+.reviews::-webkit-scrollbar-track{
+    background: none;
+ }
+
+ /* .reviews::-webkit-scrollbar-thumb{
+    background: #888;
+    border-radius: 20px;
+    
+ } */
 
 .fa-heart{
     color: red;
@@ -142,7 +160,7 @@ input[type="radio"]:checked+label{
     
     .reviews{
         margin-bottom: 10px;
-        width: 80%;
+        width: 200px;
         padding: 10px;
         border-radius: 30px;
     }
@@ -211,7 +229,7 @@ input[type="radio"]:checked+label{
      }
     
     .reviews{
-        width: 70%;
+        width: 300px;
         padding: 20px;
         border-radius: 30px;
     }
@@ -245,4 +263,72 @@ input[type="radio"]:checked+label{
         margin-bottom: 20px;
     }
     
+}
+
+.buttons {
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    border: solid 1px rgb(0, 0, 100);
+    border-radius: 15px;
+    color: rgb(0, 0, 100);
+    background-color: white;
+    font-size: 18px;
+    font-weight: 300;
+    padding: 2.5px;
+    margin-left: -20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.buttons:hover {
+    color: white;
+    background-color: rgb(0, 0, 100);
+    transition: 0.3s ease-in-out;
+}
+
+#popup {
+    font-size: 12px;
+    display: none;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    top: 20%;
+    margin: 0 auto;
+    text-align: center;
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+    margin-top: 4rem;
+    box-shadow: 0 2px 12px 0 rgb(78, 96, 96);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.pop-buttons {
+    display: block;
+    margin: auto;
+    margin-top: 10%;
+    cursor: pointer;
+    border: solid 1.5px black;
+    border-radius: 60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(0, 0, 100);
+    font-size: 18px;
+    font-weight: 600;
+    padding: 4px;
+    cursor: pointer;
+    background-color: white;
+    border-color: rgb(0, 0, 100);
+    font-size: 16px;
+    box-shadow: 1px 1px 3px 1px rgba(78, 96, 96, 0.5);
+}
+
+.pop-buttons:hover {
+    color: white;
+    background-color: rgb(0, 0, 100);
+    transition: 0.3s ease-in-out;
+}
+
+
+.fa-xmark {
+    float: right;
+    cursor: pointer;
 }

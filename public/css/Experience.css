@@ -25,6 +25,12 @@ form{
     font-size: 12px;
 }
 
+.bottomBtns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
  #form::-webkit-scrollbar{
     display: none;
 } 

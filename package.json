@@ -1,28 +1,39 @@
 {
   "name": "task",
   "version": "1.0.0",
-  "description": "",
+  "description": "Final year project",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node app",
-    "dev": "cross-env NODE_ENV=development nodemon app"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmadsadek12/TASK-.git"
   },
   "author": "Ahmad Sadek",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahmadsadek12/TASK-/issues"
+  },
+  "homepage": "https://github.com/ahmadsadek12/TASK-#readme",
   "dependencies": {
+    "alert": "^5.1.4",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "express-handlebars": "^6.0.7",
+    "express-handlebars": "^7.0.7",
     "express-session": "^1.17.3",
+    "handlebars": "^4.7.7",
+    "handlebars-helpers": "^0.9.8",
+    "hbs": "^4.2.0",
+    "jsonwebtoken": "^9.0.0",
     "method-override": "^3.0.0",
-    "moment": "^2.29.4",
-    "mongoose": "^6.9.0",
+    "mongoose": "^7.0.3",
+    "mongoose-paginate-v2": "^1.7.1",
     "morgan": "^1.10.0",
-    "passport": "^0.6.0",
-    "passport-google-oauth20": "^2.0.0"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.3",
-    "nodemon": "^2.0.20"
+    "nodemailer": "^6.9.1",
+    "popup": "^0.0.3",
+    "validator": "^13.9.0"
   }
 }
