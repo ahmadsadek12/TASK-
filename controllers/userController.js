@@ -96,6 +96,17 @@ const fetchUser = async (req, res) => {
     }
 }
 
+const getUserBookmarks = async (req, res) => {
+    try {
+      const decodedToken = jwt.verify(req.session.token, process.env.SECRET);
+      const user = await User.findById(decodedToken._id).populate('user_bookmarks');
+      res.render('Bookmarks', { layout: 'Bookmarks', users: user.user_bookmarks });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error fetching user bookmarks');
+    }
+  };
+
 // Reset password (forgot password)
 const resetPassword = async (req, res) => {
     email = req.body.email;
@@ -174,4 +185,48 @@ const resetP = async (req, res) => {
     } catch (error) { }
 }
 
-module.exports = { registerUser, loginUser, logoutUser, updateUser, fetchUser, resetPassword, resetP }
+// Add bookmark
+const addBookmark = async (req, res) => {
+    const { userId } = req.params;
+    const { user } = req.session;
+  
+    try {
+      const currentUser = await User.findById(user._id);
+      if (!currentUser.user_bookmarks.includes(userId)) {
+        currentUser.user_bookmarks.push(userId);
+        await currentUser.save();
+      } else {
+        return res.json({ success: true }); // Return success if the user is already bookmarked
+      }
+  
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: 'Failed to add bookmark' });
+    }
+  };
+  
+ // Remove bookmark
+ const deleteBookmark = async (req, res) => {
+    const { userId } = req.params;
+    const { user } = req.session;
+  
+    try {
+      const currentUser = await User.findById(user._id);
+      if (currentUser.user_bookmarks.includes(userId)) {
+        currentUser.user_bookmarks = currentUser.user_bookmarks.filter(
+          (bookmarkId) => bookmarkId !== userId
+        );
+        await currentUser.save();
+      } else {
+        return res.json({ success: true }); // Return success if the user is not bookmarked
+      }
+  
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: 'Failed to remove bookmark' });
+    }
+  };
+
+module.exports = { registerUser, loginUser, logoutUser, updateUser, fetchUser, resetPassword, resetP, getUserBookmarks, addBookmark, deleteBookmark };

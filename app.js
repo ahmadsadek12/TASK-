@@ -117,6 +117,10 @@ Handlebars.registerHelper('substring', function (a) {
   return a.slice(0, 200);
 });
 
+Handlebars.registerHelper('slice', function(str, start, end) {
+  return str.slice(start, end);
+});
+
 //Routes
 app.use('/', protectedRoutes)
 

@@ -1,5 +1,4 @@
 <h3>{{user.firstName}} {{user.lastName}}, {{user.gender}}</h3>
-<h3 class="type-text" id="user-type">Worker</h3>
 <div id="form">
     <p class="username">{{user.firstName}} {{user.lastName}}</p>
     <div class="thumb">
@@ -22,12 +21,14 @@
         <p class="contact-label">Contact info:</p>
         <p class="phone-number">{{user.phoneNumber}}, {{user.email}}</p>
     </div>
+    {{#ifEqual userData.userType 1}}
     <div class="type">
         <div id="experience">
             <p class="experience-label">Experience:</p>
             <p class="experience" id="user-experience">{{user.experience}}</p>
         </div>
     </div>
+    {{/ifEqual}}
     <div style="display: flex; justify-content: space-evenly">
         <a href="/Main" class="buttons">Home</a>
         <a href="/Reviews/{{user._id}}" class="buttons">View reviews</a>

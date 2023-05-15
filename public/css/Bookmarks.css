@@ -1,5 +1,13 @@
 body {
     background-color: rgb(200, 250, 250);
+    text-align: center;
+}
+
+h1{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 200;
+    margin-top: -20px;
+    color: rgb(150, 100, 50); margin-top: 40px;
 }
 
 .names {

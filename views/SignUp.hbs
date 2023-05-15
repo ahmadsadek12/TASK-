@@ -32,13 +32,10 @@
                 <input type="radio" id="other-radio" value="Other" name="gender" class="genders"
                     onchange="toggleOtherInput()">
                 <label for="other-radio" id="other-label" class="genders">Other</label>
-                <div class="otherInput">
-                    <input type="text" id="other-input" name="otherGender" class="genders" style="display:none;">
-                </div>
             </fieldset>
 
         </div>
-        <fieldset class="fieldsets">
+        <fieldset class="fieldsets" id="other-input" hidden>
             <legend>Pronouns <label style="color: gray;">(Optional)</label>
             </legend>
             <div class="otherInput">

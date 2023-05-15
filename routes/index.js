@@ -3,6 +3,7 @@ const router = express.Router()
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const { getUserNotifs } = require('../controllers/notificationController');
+const { getUserBookmarks } = require('../controllers/userController');
 
 // require authentication for all logged-in routes (middleware)
 const requireAuth = require('../middleware/requireAuth')
@@ -28,9 +29,11 @@ router.get('/', isLoggedIn, (req, res) => {
   res.render('SignIn', { layout: 'SignIn', })
 })
 
-router.get('/Reviews/:id', getUserReviews)
+router.get('/Reviews/:id', requireAuth, getUserReviews)
 
-router.get('/Notifications', getUserNotifs)
+router.get('/Notifications', requireAuth, getUserNotifs)
+
+router.get('/Bookmarks', requireAuth, getUserBookmarks);
 
 router.get('/ForgotPassword', isLoggedIn, (req, res) => {
   res.render('ForgotPassword', { layout: 'ForgotPassword', })
@@ -54,7 +57,7 @@ router.get('/Main', async (req, res) => {
   const page = req.query.page || 1; // current page (default to 1)
   const query = {
     userType: 1,
-    _id: { $ne: decodedToken._id }
+    _id: { $ne: decodedToken._id },
   };
   const search = req.query.search;
   if (search) {
@@ -114,6 +117,18 @@ router.get("/reset-password", isLoggedIn, async (req, res) => {
   res.render('reset-password', { layout: 'reset-password', })
 })
 
+// Import the addBookmark and removeBookmark controller functions
+const { addBookmark, removeBookmark } = require('../controllers/bookmarkController');
+
+// ...
+
+// Route to add a bookmarked user
+router.post('/Bookmarks/:id', requireAuth, addBookmark);
+
+// Route to remove a bookmarked user
+router.delete('/Bookmarks/:id', requireAuth, removeBookmark);
+
+// ...
 
 
 module.exports = router

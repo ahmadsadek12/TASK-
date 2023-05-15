@@ -1,16 +1,3 @@
-function myFunction() {
-    var other = document.getElementById("other-radio");
-    var pronouns = document.getElementById("pronouns");
-    var gender = document.getElementById("genderop");
-    if (other.checked) {
-        pronouns.type = "text";
-        gender.type = "text";
-    } else {
-        pronouns.type = "hidden";
-        gender.type = "hidden";
-    }
-}
-
 function ExperienceButton() {
     var worker = document.getElementById("worker-radio");
     var customer = document.getElementById("customer-radio");
@@ -33,12 +20,20 @@ window.onload = function newFunction() {
     }
 }
 
-function toggleOtherInput() {
-    var otherInput = document.getElementById('other-input');
-    if (document.getElementById('other-radio').checked) {
-        otherInput.style.display = 'block';
+var other = document.getElementById("other-radio");
+    var pronouns = document.getElementById("pronouns");
+    if (other.checked) {
+        pronouns.type = "text";
     } else {
-        otherInput.style.display = 'none';
+        pronouns.type = "hidden";
+    }
+
+function toggleOtherInput() {
+    var pronouns = document.getElementById("pronouns");
+    if (document.getElementById('other-radio').checked) {
+        pronouns.style.display = 'block';
+    } else {
+        pronouns.style.display = 'none';
     }
 }
 

@@ -3,7 +3,7 @@ const router = express.Router()
 const User = require('../models/User');
 
 // controller functions 
-const { registerUser, loginUser, logoutUser, updateUser, fetchUser, resetPassword, resetP } = require('../controllers/userController')
+const { registerUser, loginUser, logoutUser, updateUser, fetchUser, resetPassword, resetP, addBookmark, deleteBookmark } = require('../controllers/userController')
 
 
 // middleware
@@ -29,6 +29,12 @@ router.post('/reset-password', resetP);
 // Update user route
 router.post('/:id/update', requireAuth, updateUser)
 
+// Add bookmark
+router.post('/Bookmarks/:userId', addBookmark);
+  
+ // Remove bookmark
+router.delete('/Bookmarks/:userId', deleteBookmark);
+  
 
 
-module.exports = router
+module.exports = router;

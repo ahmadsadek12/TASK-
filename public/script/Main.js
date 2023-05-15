@@ -15,7 +15,7 @@ function myFunction(userId) {
       })
     })
       .then(notification => {
-        alert("You have successfully bookmarked this user. They will be notified of this action.");
+        
       })
       .catch(error => {
         alert(error);
@@ -30,6 +30,57 @@ function myFunction2(userId) {
   var solid = document.getElementById("solid" + userId)
   solid.style.visibility = 'hidden';
   regular.style.visibility = 'visible';
+}
+
+// JavaScript code for handling bookmark functionality
+function addBookmark(userId) {
+  // Send an AJAX request to add the bookmarked user
+  fetch(`/Bookmarks/${userId}`, {
+    method: 'POST',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Handle the response
+      if (data.success) {
+        // Bookmark added successfully
+        // Update UI, e.g., change bookmark icon color or visibility
+        document.getElementById(`regular${userId}`).style.visibility = 'hidden';
+        document.getElementById(`solid${userId}`).style.visibility = 'visible';
+      } else {
+        // Failed to add bookmark
+        // Display an error message or handle the error
+        console.error(data.error);
+      }
+    })
+    .catch((error) => {
+      // Handle network or server error
+      console.error(error);
+    });
+}
+
+function removeBookmark(userId) {
+  // Send an AJAX request to remove the bookmarked user
+  fetch(`/Bookmarks/${userId}`, {
+    method: 'DELETE',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Handle the response
+      if (data.success) {
+        // Bookmark removed successfully
+        // Update UI, e.g., change bookmark icon color or visibility
+        document.getElementById(`regular${userId}`).style.visibility = 'visible';
+        document.getElementById(`solid${userId}`).style.visibility = 'hidden';
+      } else {
+        // Failed to remove bookmark
+        // Display an error message or handle the error
+        console.error(data.error);
+      }
+    })
+    .catch((error) => {
+      // Handle network or server error
+      console.error(error);
+    });
 }
 
 

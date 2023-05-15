@@ -17,7 +17,11 @@ const reviewSchema = mongoose.Schema({
         review: {
             type: String,
             required: true
-        }
+        },
+        fields: {
+          type: String,
+          required: true
+      }
 },
     {timestamps: true}
 );

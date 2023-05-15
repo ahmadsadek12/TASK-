@@ -9,7 +9,7 @@ const getUserNotifs = async (req, res) => {
 
     const notifications = await Notification.find({
       $or: [{ created_for: userId }]
-    }).sort({createdAt: -1});
+    }).sort({ createdAt: -1 });
     res.render('Notifications', { layout: 'Notifications', notifs: notifications })
   } catch (error) {
     res.status(500).json({ message: "Could not get user's notifications", error: error.message });
@@ -92,4 +92,14 @@ const replyToNotif = async (req, res) => {
   }
 }
 
-module.exports = { hireNotification, getUserNotifs, createCustomNotif, replyToNotif }
+const deleteNotif = async (req, res) => {
+  const { notif_id } = req.params;
+  try {
+    const notification = await Notification.findByIdAndDelete({ _id: notif_id }, { new: true });
+    res.status(200).json({ message: 'Notification deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Could not delete notification', error: error.message });
+  }
+}
+
+module.exports = { hireNotification, getUserNotifs, createCustomNotif, replyToNotif, deleteNotif }

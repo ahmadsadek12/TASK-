@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUserNotifs, hireNotification, replyToNotif, createCustomNotif } = require('../controllers/notificationController');
+const {hireNotification, replyToNotif, createCustomNotif, deleteNotif } = require('../controllers/notificationController');
 const verifyToken = require('../middleware/requireAuth');
 
 const router = express.Router();
@@ -8,5 +8,6 @@ const router = express.Router();
 router.post("/hire", verifyToken, hireNotification);
 router.post("/respond/:notif_id", verifyToken, replyToNotif);
 router.post("/create-notification", verifyToken, createCustomNotif);
+router.delete("/delete-notification/:notif_id", verifyToken, deleteNotif);
 
 module.exports = router

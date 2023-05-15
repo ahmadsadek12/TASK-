@@ -6,13 +6,11 @@ const Notification = require('../models/Notification')
 
 
 // Create a review
-const createReview = async (req, res) => {
-
-
-    
+const createReview = async (req, res) => {    
     try {
         const {id} = req.params;
         const { rating, review_text } = req.body;
+        const { fields_text } = req.body;
         const decodedToken = jwt.verify(req.session.token, process.env.SECRET);
         const user = await User.findById(decodedToken._id);
       const reviewer = {
@@ -25,7 +23,8 @@ const createReview = async (req, res) => {
         created_for: id,
         creator: reviewer,
         rating,
-        review: review_text
+        review: review_text,
+        fields: fields_text
       });
 
       await Notification.create({
@@ -33,7 +32,7 @@ const createReview = async (req, res) => {
         creator: reviewer,
         type_id: 3,
         extra_data: {
-          review_text: review_text
+          review_text: review_text,
         }
       });
       res.status(201).json({ review });

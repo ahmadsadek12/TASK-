@@ -3,12 +3,12 @@
   <div class="top-select">
     <input type="radio" onclick="notifs(); noNotifClick()" id="hire" name="notifs" class="select-notif" hidden checked>
     <label for="hire" class="select-notif-label">
-      Hire requests&nbsp 
+      Hire requests&nbsp
     </label>
     |&nbsp
     <input type="radio" onclick="notifs(); noNotifClick()" id="reviews" name="notifs" class="select-notif" hidden>
     <label for="reviews" class="select-notif-label">
-      Reviews&nbsp 
+      Reviews&nbsp
     </label>
     |&nbsp
     <input type="radio" onclick="notifs(); noNotifClick()" id="bookmarks" name="notifs" class="select-notif" hidden>
@@ -38,6 +38,7 @@
         </div>
       </div>
       <p class="date">{{formatDate this.createdAt 'DD/MM/YY'}}</p>
+      <hr>
     </div>
     {{/if}}
     {{#if (eq type_id 4)}}
@@ -52,13 +53,19 @@
           <p class="username">{{creator.user_full_name}} </p>
         </a>
         <p class="action">responded to your hire request:</p>
+        <br>
         <p>{{extra_data.response}}</p>
         {{#ifEqual extra_data.response "Hire request accepted."}}
         <p style="font-weight: bold;">Please contact at: {{creator.user_phoneNumber}}</p>
         {{else}}
         {{/ifEqual}}
+        <div class="notification-buttons" data-notif="{{_id}}" data-user="{{creator.user_id}}">
+          <button type="submit" onclick="deleteNotif(event)" class="buttons"
+            style="float: inline-end; margin-top: 15px;">Delete</button>
+        </div>
       </div>
       <p class="date">{{formatDate this.createdAt 'DD/MM/YY'}}</p>
+      <hr>
     </div>
     {{/if}}
     {{else}}
@@ -78,9 +85,15 @@
           <p class="username">{{creator.user_full_name}} </p>
         </a>
         <p class="action">Bookmarked you.</p>
+        <br>
         <p class="message"></p>
+        <div class="notification-buttons" data-notif="{{_id}}" data-user="{{creator.user_id}}">
+          <button type="submit" onclick="deleteNotif(event)" class="buttons"
+            style="float: inline-end; margin-top: 15px;">Delete</button>
+        </div>
       </div>
       <p class="date">{{formatDate this.createdAt 'DD/MM/YY'}}</p>
+      <hr>
     </div>
     {{/if}}
     {{else}}
@@ -100,14 +113,16 @@
           <p class="username">{{creator.user_full_name}} </p>
         </a>
         <p class="action">Reviewed you: </p>
-        {{!-- {{#if (lengthGT extra_data.review_text 200)}}
-        <p class="message">{{extra_data.review_text}}</p>
-        {{else}}
-        <p class="message"></p>
-        {{/if}} --}}
-        <p class="message">{{extra_data.review_text}}</p>
+        <br>
+        <p class="message">{{slice extra_data.review_text 0 200}}{{#if (gt extra_data.review_text.length
+          200)}}<span style="font-weight: bold;">...</span>{{/if}}</p>
+        <div class="notification-buttons" data-notif="{{_id}}" data-user="{{creator.user_id}}">
+          <button type="submit" onclick="deleteNotif(event)" class="buttons"
+            style="float: inline-end; margin-top: 15px;">Delete</button>
+        </div>
       </div>
       <p class="date">{{formatDate this.createdAt 'DD/MM/YY'}}</p>
+      <hr>
     </div>
     {{/if}}
     {{else}}

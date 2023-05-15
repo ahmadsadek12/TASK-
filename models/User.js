@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema({
         type: Array,
     },
     user_bookmarks: {
-        type: Array,
+        type: [String], // Updated to an array of strings
     },
     averageRating: {
         type: Number,
@@ -111,8 +111,22 @@ userSchema.statics.login = async function (email, password) {
     }
 
     return user
-
 }
+
+userSchema.methods.addBookmark = async function (userId) {
+    if (!this.user_bookmarks.includes(userId)) {
+      this.user_bookmarks.push(userId);
+      await this.save();
+    }
+  }
+  
+  // Remove a bookmarked user
+  userSchema.methods.removeBookmark = async function (userId) {
+    if (this.user_bookmarks.includes(userId)) {
+      this.user_bookmarks = this.user_bookmarks.filter((id) => id !== userId);
+      await this.save();
+    }
+  }
 
 userSchema.plugin(mongoosePaginate);
 

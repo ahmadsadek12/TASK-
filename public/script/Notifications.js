@@ -33,6 +33,23 @@ function replyToRequest(event, status) {
     });
 }
 
+function deleteNotif(event) {
+  const div = event.target.parentNode;
+  const notificationId = div.dataset.notif;
+
+  fetch('/api/notification/delete-notification/' + notificationId, {
+    method: 'DELETE'
+  })
+    .then(notification => {
+      location.reload();
+      alert("You have successfully deleted Notification")
+    })
+    .catch(error => {
+      alert(error);
+      alert("Unable to delete Notification")
+    });
+}
+
 function notifs() {
   var hireButton = document.getElementById("hire")
   var bookmarkButton = document.getElementById("bookmarks")
@@ -88,5 +105,5 @@ function noNotifClick() {
     bookmark.innerHTML = "<div>No one has bookmarked you yet yet.</div>"
   if (reviews.innerText === "")
     reviews.innerHTML = "<div>No one has reviewed you yet yet.</div>"
-
 }
+

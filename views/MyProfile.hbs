@@ -19,13 +19,9 @@
         <input type="radio" id="other-radio" value="Other" name="gender" class="genders" onchange="toggleOtherInput()"
           {{#if userData.gender}}{{#if (eq userData.gender "Other" )}}checked{{/if}}{{/if}}>
         <label for="other-radio" id="other-label" class="genders">Other</label>
-        <div class="otherInput">
-          <input type="text" id="other-input" name="otherGender" class="genders" style="{{#unless (eq userData.gender "
-            Other")}}display:none;{{/unless}}" value="{{userData.otherGender}}">
-        </div>
       </fieldset>
     </div>
-    <fieldset class="fieldsets">
+    <fieldset class="fieldsets" id="pronouns" hidden>
       <legend>Pronouns <label style="color: gray;">(Optional)</label>
         <div class="otherInput">
           <input class="genders" type="text" id="pronouns" name="pronouns" value="{{userData.pronouns}}"
@@ -34,7 +30,7 @@
         </div>
     </fieldset>
     <fieldset class="fieldsets">
-      <legend>Select your country: </legend>
+      <legend>Country: </legend>
       <div class="otherInput">
         <select id="countryPicker" class="select2" style="width: 50%; margin-top: 20px; height: 20%;" name="country"
           value="{{userData.country}}">
@@ -43,9 +39,9 @@
       </div>
     </fieldset>
     <fieldset class="fieldsets">
-      <legend>Enter your phone number:</legend>
+      <legend>Phone number:</legend>
       <input type="tel" id="phoneNumberInput" class="intl-tel-input" value="{{userData.phoneNumber}}"
-        name="phoneNumber" />
+        name="phoneNumber" style="border-radius: 20px; font-size: 16px;"  />
     </fieldset>
     <div class="bottomBtns">
       <a class="buttons" style="margin-right: 10px; text-decoration: none;" href="/Main">Home</a>
