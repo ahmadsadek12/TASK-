@@ -3,7 +3,7 @@ const router = express.Router()
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const { getUserNotifs } = require('../controllers/notificationController');
-const { getUserBookmarks } = require('../controllers/userController');
+const Handlebars = require('handlebars')
 
 // require authentication for all logged-in routes (middleware)
 const requireAuth = require('../middleware/requireAuth')
@@ -33,8 +33,6 @@ router.get('/Reviews/:id', requireAuth, getUserReviews)
 
 router.get('/Notifications', requireAuth, getUserNotifs)
 
-router.get('/Bookmarks', requireAuth, getUserBookmarks);
-
 router.get('/ForgotPassword', isLoggedIn, (req, res) => {
   res.render('ForgotPassword', { layout: 'ForgotPassword', })
 })
@@ -52,25 +50,49 @@ router.get('/Experience', async (req, res) => {
 })
 
 router.get('/Main', async (req, res) => {
-  const decodedToken = jwt.verify(req.session.token, process.env.SECRET);
-  const perPage = 3; // number of items per page
-  const page = req.query.page || 1; // current page (default to 1)
-  const query = {
-    userType: 1,
-    _id: { $ne: decodedToken._id },
-  };
-  const search = req.query.search;
-  if (search) {
-    query.$or = [
-      { firstName: { $regex: search, $options: 'i' } },
-      { lastName: { $regex: search, $options: 'i' } },
-      { email: { $regex: search, $options: 'i' } },
-      { experience: { $regex: search, $options: 'i' } },
-      { country: { $regex: search, $options: 'i' } }
-    ];
+  try {
+    const decodedToken = jwt.verify(req.session.token, process.env.SECRET);
+    const perPage = 3; // number of items per page
+    const page = req.query.page || 1; // current page (default to 1)
+    const query = {
+      userType: 1,
+      _id: { $ne: decodedToken._id },
+    };
+    const search = req.query.search;
+    if (search) {
+      query.$or = [
+        { firstName: { $regex: search, $options: 'i' } },
+        { lastName: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } },
+        { experience: { $regex: search, $options: 'i' } },
+        { country: { $regex: search, $options: 'i' } }
+      ];
+    }
+    const sortOptions = { averageRating: -1 }; // Sort by averageRating field in descending order
+    const users = await User.paginate(query, { page, limit: perPage, sort: sortOptions });
+
+    // Get the current user's country
+    const currentUser = await User.findById(decodedToken._id);
+    const bookmarkedUsers = currentUser.user_bookmarks;
+    const currentUserCountry = currentUser.country;
+
+    if (req.query.myCountry) {
+      query.country = currentUserCountry;
+    }
+
+    Handlebars.registerHelper('bookmarkedUser', function (userId) {
+      const userIdString = userId.toString();
+      if (bookmarkedUsers.includes(userIdString)) {
+        return false;
+      }
+      return true;
+    });
+
+    res.render('Main', { layout: 'Main', bookmarkedUsers, users, currentUserCountry });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching data');
   }
-  const users = await User.paginate(query, { page, limit: perPage }); // retrieve paginated users data
-  res.render('Main', { layout: 'Main', users }); // pass the users data to your view
 });
 
 router.get('/search', async (req, res) => {
@@ -113,22 +135,39 @@ router.get('/Profiles/:id', async (req, res) => {
   }
 })
 
+router.get('/Hire/:id', async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const user = await User.findById(userId);
+    res.render('Hire', { layout: 'Hire', user: user })
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching user');
+  }
+})
+
 router.get("/reset-password", isLoggedIn, async (req, res) => {
   res.render('reset-password', { layout: 'reset-password', })
 })
 
-// Import the addBookmark and removeBookmark controller functions
-const { addBookmark, removeBookmark } = require('../controllers/bookmarkController');
+router.get('/Bookmarks', async (req, res) => {
+  const decodedToken = jwt.verify(req.session.token, process.env.SECRET);
+  try {
+    // Retrieve the user's bookmarked users from the session or database
+    const currentUser = await User.findById(decodedToken._id);
+    const userBookmarks = currentUser.user_bookmarks;
+    // Fetch the bookmarked users' details from the database and sort by averageRating
+    const bookmarkedUsers = await User.find({ _id: { $in: userBookmarks } }).sort({ averageRating: -1 });
 
-// ...
+    res.render('Bookmarks', { layout: 'Bookmarks', bookmarkedUsers });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching bookmarks');
+  }
+});
 
-// Route to add a bookmarked user
-router.post('/Bookmarks/:id', requireAuth, addBookmark);
-
-// Route to remove a bookmarked user
-router.delete('/Bookmarks/:id', requireAuth, removeBookmark);
-
-// ...
-
+router.get('*', async (req, res) => {
+  res.render('Error404', { layout: 'Error404' });
+})
 
 module.exports = router

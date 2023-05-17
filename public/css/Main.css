@@ -10,6 +10,29 @@ body {
     margin-left: 5px;
 }
 
+.choices{
+    border: solid 1px black;
+    border-radius: 20px;
+    padding: 5px;
+    margin-left: 10px;
+    line-height: 30px;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 5px;
+    padding-block-end: 0px;
+    padding-block-start: 0px;
+    margin-block-end: 5px;
+    display: inline-block;
+    box-shadow: 1px 1px 3px 1px rgba(78, 96, 96, 0.5);
+}
+
+input:checked + .choices{
+    color: rgb(220, 150, 70);
+    border-color:   rgb(220, 150, 70);
+    box-shadow: 1px 1px 3px 1px rgba(220, 150, 70, 0.5);
+    border: solid 2px;
+}
+
 .user-dashboard-info-box .candidates-list .thumb img {
     width: 40px;
     height: 40px;

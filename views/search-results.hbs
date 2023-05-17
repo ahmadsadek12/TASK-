@@ -7,11 +7,13 @@
       <tr class="candidates-lbuttonsist">
         <td class="title">
           <div class="thumb">
-            {{#ifEqual this.gender 'Male'}}
-            <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-            {{else}}
-            <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-            {{/ifEqual}}
+            <a href="Profiles/{{this._id}}">
+              {{#ifEqual this.gender 'Male'}}
+              <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+              {{else}}
+              <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+              {{/ifEqual}}
+            </a>
           </div>
           <div class="candidate-list-details">
             <div class="candidate-list-info">
@@ -107,5 +109,6 @@
       <li><i class="fas fa-filter pr-1"></i></li>
       <li><i class="fas fa-map-marker-alt pr-1"></i></li>
     </ul>
-    <button class="pop-buttons" data-user="null" onclick="hireUser(this)">Hire!</button>
+    <a href="/Hire/{{this._id}}" class="pop-buttons" data-user="null"
+      style="width: fit-content; padding: 5px; text-decoration: none;">Hire!</a>
   </div>

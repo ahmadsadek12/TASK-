@@ -15,7 +15,7 @@ function myFunction(userId) {
       })
     })
       .then(notification => {
-        
+
       })
       .catch(error => {
         alert(error);
@@ -25,27 +25,17 @@ function myFunction(userId) {
   }
 }
 
-function myFunction2(userId) {
-  var regular = document.getElementById("regular" + userId)
-  var solid = document.getElementById("solid" + userId)
-  solid.style.visibility = 'hidden';
-  regular.style.visibility = 'visible';
-}
-
-// JavaScript code for handling bookmark functionality
 function addBookmark(userId) {
   // Send an AJAX request to add the bookmarked user
-  fetch(`/Bookmarks/${userId}`, {
+  fetch(`/api/user/Bookmarks/${userId}`, {
     method: 'POST',
   })
     .then((response) => response.json())
     .then((data) => {
-      // Handle the response
       if (data.success) {
         // Bookmark added successfully
         // Update UI, e.g., change bookmark icon color or visibility
-        document.getElementById(`regular${userId}`).style.visibility = 'hidden';
-        document.getElementById(`solid${userId}`).style.visibility = 'visible';
+        location.reload()
       } else {
         // Failed to add bookmark
         // Display an error message or handle the error
@@ -60,7 +50,7 @@ function addBookmark(userId) {
 
 function removeBookmark(userId) {
   // Send an AJAX request to remove the bookmarked user
-  fetch(`/Bookmarks/${userId}`, {
+  fetch(`/api/user/Bookmarks/${userId}`, {
     method: 'DELETE',
   })
     .then((response) => response.json())
@@ -69,8 +59,7 @@ function removeBookmark(userId) {
       if (data.success) {
         // Bookmark removed successfully
         // Update UI, e.g., change bookmark icon color or visibility
-        document.getElementById(`regular${userId}`).style.visibility = 'visible';
-        document.getElementById(`solid${userId}`).style.visibility = 'hidden';
+        location.reload()
       } else {
         // Failed to remove bookmark
         // Display an error message or handle the error
@@ -83,6 +72,21 @@ function removeBookmark(userId) {
     });
 }
 
+function filterByCountry(checkbox, currentUserCountry) {
+  const tableRows = document.getElementsByClassName("candidates-lbuttonsist");
+
+  for (let i = 0; i < tableRows.length; i++) {
+    const countryCell = tableRows[i].querySelector(".information li:last-child");
+    const country = countryCell.innerText.trim();
+
+    if (checkbox.checked && country !== currentUserCountry) {
+      tableRows[i].style.display = "none";
+    } else {
+      tableRows[i].style.display = "";
+    }
+  }
+}
+
 
 function showPopUp(user) {
   const userId = user.id;
@@ -92,6 +96,7 @@ function showPopUp(user) {
       var popup = document.getElementById("popup");
 
       var thumb = popup.querySelector(".pop-thumb img");
+      var heart = popup.querySelector(".pop-heart");
       var heartIcon = popup.querySelector(".pop-heart i");
       var popRatingText = popup.querySelector(".pop-rating");
       var rating = user.averageRating;
@@ -127,6 +132,7 @@ function showPopUp(user) {
         popRatingText.textContent = "-/5";
       }
       heartIcon.setAttribute("id", "h" + user.id);
+      heart.setAttribute("href", "/Reviews/" + user._id);
       // heartLink.setAttribute("href", "/Reviews/" + user.id);
       const experienceArr = user.experience;
       var experienceString = '';
@@ -136,6 +142,7 @@ function showPopUp(user) {
       category.textContent = experienceString.substring(0, experienceString.length - 2);
       location.textContent = user.country;
       hireButton.setAttribute("id", "hire-" + user.id);
+      hireButton.setAttribute("href", "/Hire/" + user._id);
 
       if (popup.style.display === 'none') {
         popup.style.display = "block";
@@ -143,6 +150,7 @@ function showPopUp(user) {
     })
     .catch(error => console.error(error));
 }
+
 
 function closePopup() {
   var popup = document.getElementById("popup");
@@ -179,29 +187,5 @@ function showPartial() {
     bars.style.display = "none"
   } else {
     bars.style.display = "block"
-  }
-}
-
-
-function hireUser(button) {
-  const userId = button.dataset.user; // Replace `user.id` with the ID of the specific user
-  try {
-    fetch('/api/notification/hire', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        hired_id: userId
-      })
-    })
-      .then(notification => {
-        alert("You have successfully sent a request to hire the user. They will be notified and when they respond you will be notified as well.");
-      })
-      .catch(error => {
-        alert(error);
-      });
-  } catch {
-    console.error(error);
   }
 }

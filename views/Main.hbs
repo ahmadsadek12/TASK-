@@ -11,10 +11,13 @@
       </form>
   </div>
   <h1>All freelancers</h1>
+  <input type="checkbox" id="myCountry" name="myCountry" onchange="filterByCountry(this, '{{currentUserCountry}}')"
+    hidden>
+  <label style="float: left;" class="choices" for="myCountry">My country only</label><br>
 
   <tbody>
     {{#each users.docs}}
-    <tr class="candidates-lbuttonsist">
+    <tr class="candidates-lbuttonsist" data-country="{{this.country}}">
       <td class="title">
         <div class="thumb">
           <a href="Profiles/{{this._id}}">
@@ -28,7 +31,8 @@
         <div class="candidate-list-details">
           <div class="candidate-list-info">
             <div class="candidate-list-title">
-              <h5 class="mb-0"><input type="radio" name="names" onclick="showPopUp(this); blur();" id="{{this._id}}" hidden>
+              <h5 class="mb-0"><input type="radio" name="names" onclick="showPopUp(this); blur();" id="{{this._id}}"
+                  hidden>
                 <label for="{{this._id}}" class="names">{{this.firstName}} {{this.lastName}}</label>
               </h5>
             </div>
@@ -69,10 +73,15 @@
       </td>
       <td>
         <ul class="list-unstyled mb-0 d-flex justify-content-end">
-          <a onclick="myFunction('{{this._id}}'); addBookmark('{{this._id}}')" id="regular{{this.id}}" class="text-primary" data-toggle="tooltip"
-            title="" data-original-title="bookmark"><i class="fa-regular fa-bookmark"></i></a>
-          <a onclick="myFunction2('{{this._id}}'); removeBookmark('{{this._id}}')" id="solid{{this.id}}" class="text-primary" data-toggle="tooltip"
-            title="" data-original-title="bookmark" style="visibility: hidden;"><i class="fa-solid fa-bookmark"></i></a>
+          {{#if (bookmarkedUser this._id)}}
+          <a onclick="addBookmark('{{this._id}}')" id="regular{{this._id}}"
+            class="text-primary" data-toggle="tooltip" title="" data-original-title="bookmark"><i
+              class="fa-regular fa-bookmark"></i></a>
+          {{else}}
+          <a onclick="removeBookmark('{{this._id}}')" id="solid{{this._id}}"
+            class="text-primary" data-toggle="tooltip" title="" data-original-title="bookmark"><i
+              class="fa-solid fa-bookmark"></i></a>
+          {{/if}}
         </ul>
       </td>
     </tr>
@@ -83,26 +92,23 @@
     <ul class="pagination">
       {{#if users.hasNextPage}}
       <li class="page-item" style="float: right;">
-        <a href="?page={{users.nextPage}}" class="page-link"
+        <a href="?page={{users.nextPage}}&myCountry={{myCountryFilter}}" class="page-link"
           style="text-decoration: none; color: rgb(200, 130, 0);">Next</a>
       </li>
       {{else}}
-
       {{/if}}
       {{#if users.hasPrevPage}}
       <li class="page-item" style="float: right;">
-        <a href="?page={{users.prevPage}}" class="page-link"
+        <a href="?page={{users.prevPage}}&myCountry={{myCountryFilter}}" class="page-link"
           style="text-decoration: none; color: rgb(200, 130, 0);">Previous</a>
       </li>
       {{else}}
-
       {{/if}}
-
     </ul>
   </nav>
   </table>
 
-  
+
 
   <div id="popup" class="popup" style="display: none;">
     <input type="radio" name="names" onclick="closePopup()" id="close" hidden>
@@ -112,13 +118,15 @@
     </div>
     <td class="pop-fav">
       <span class="pop-rating" id="heart-6"></span>
-      <a class="pop-heart candidate-list-favourite order-2 text-danger"><i
-          class="fas fa-heart"></i></a>
+      <a class="pop-heart candidate-list-favourite order-2 text-danger"><i class="fas fa-heart"></i></a>
     </td>
     <h5 class="pop-names"></h5>
     <ul class="pop-information">
       <li></li>
-      <nobr><i class="fas fa-map-marker-alt pr-1"></i><li></li></nobr>
+      <nobr><i class="fas fa-map-marker-alt pr-1"></i>
+        <li></li>
+      </nobr>
     </ul>
-    <button class="pop-buttons" data-user="null" onclick="hireUser(this)">Hire!</button>
+    <a class="pop-buttons" data-user="null" style="width: fit-content; padding: 5px; text-decoration: none;">Hire!</a>
   </div>
+</div>

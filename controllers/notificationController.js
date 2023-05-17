@@ -17,7 +17,6 @@ const getUserNotifs = async (req, res) => {
 }
 
 
-// Create a notification
 const hireNotification = async (req, res) => {
   const { hired_id } = req.body;
   const decodedToken = jwt.verify(req.session.token, process.env.SECRET);
@@ -37,8 +36,11 @@ const hireNotification = async (req, res) => {
       type_id: 1,
       is_pending: true,
       is_approved: false,
-      is_rejected: false
+      is_rejected: false,
+      work_request: req.body.explanation, // Add work_request field from request body
+      offer: req.body.wage // Add offer field from request body
     });
+
     res.status(201).json({ notification });
   } catch (error) {
     res.status(500).json({ message: "Could not create notification", error: error.message });

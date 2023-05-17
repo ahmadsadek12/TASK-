@@ -21,20 +21,18 @@ router.get('/logout', logoutUser)
 // Change a user password (forgot password)
 router.post('/forgot-password', resetPassword);
 
-// fetch a specific user
-router.get('/users/:id', requireAuth, fetchUser);
-
 router.post('/reset-password', resetP);
 
 // Update user route
 router.post('/:id/update', requireAuth, updateUser)
 
 // Add bookmark
-router.post('/Bookmarks/:userId', addBookmark);
+router.post('/Bookmarks/:userId', requireAuth, addBookmark);
   
  // Remove bookmark
-router.delete('/Bookmarks/:userId', deleteBookmark);
+router.delete('/Bookmarks/:userId', requireAuth, deleteBookmark);
+
+// fetch a specific user
+router.get('/users/:id', requireAuth, fetchUser);
   
-
-
 module.exports = router;

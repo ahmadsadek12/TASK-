@@ -6,7 +6,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>TASK!</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <script src="/script/Main.js"></script>
+    <script src="/script/Main.js"></script>
 
     <link rel="stylesheet" href="/css/Main.css">
     <link rel="stylesheet" href="/css/header.css">
@@ -21,18 +21,19 @@
 </body>
 
 <script>
-const form = document.querySelector('#search-form');
-const searchResults = document.querySelector('#search-results');
+    const form = document.querySelector('#search-form');
+    const searchResults = document.querySelector('#search-results');
 
 
-form.addEventListener('submit', async (event) => {
-  event.preventDefault(); // prevent the form from submitting
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault(); // prevent the form from submitting
 
-  const query = document.querySelector('#search').value;
-  const response = await fetch(`/search?query=${query}`);
-  const html = await response.text();
+        const query = document.querySelector('#search').value;
+        const response = await fetch(`/search?query=${query}`);
+        const html = await response.text();
 
-  searchResults.innerHTML = html;
-});
+        searchResults.innerHTML = html;
+    });
 </script>
+
 </html>

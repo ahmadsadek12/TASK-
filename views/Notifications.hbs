@@ -31,7 +31,9 @@
         <a href="/Profiles{{creator.user_id}}">
           <p class="username">{{creator.user_full_name}}</p>
         </a>
-        <p class="action">has requested to hire you.</p>
+        <p class="action">has requested to hire you.</p><br><br><br>
+        <p class="action" style="font-weight: bold;">Job:</p><p> {{this.work_request}}</p>
+        <p class="action" style="float: left; font-weight: bold;">Offer per hour: {{this.offer}}</p><br><br><br>
         <div class="notification-buttons" data-notif="{{_id}}" data-user="{{creator.user_id}}">
           <button class="btn btn-success" onclick="replyToRequest(event, 1)" type="button">Accept</button>
           <button class="btn btn-danger" onclick="replyToRequest(event, 0)" type="button">Reject</button>

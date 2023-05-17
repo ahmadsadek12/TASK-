@@ -21,7 +21,7 @@
         <p class="contact-label">Contact info:</p>
         <p class="phone-number">{{user.phoneNumber}}, {{user.email}}</p>
     </div>
-    {{#ifEqual userData.userType 1}}
+    {{#ifEqual user.userType 1}}
     <div class="type">
         <div id="experience">
             <p class="experience-label">Experience:</p>
@@ -32,8 +32,8 @@
     <div style="display: flex; justify-content: space-evenly">
         <a href="/Main" class="buttons">Home</a>
         <a href="/Reviews/{{user._id}}" class="buttons">View reviews</a>
-        {{#ifEqual userData.userType 1}}
-        <button class="buttons" id="hire-button" onclick="hireUser('{{user._id}}')">Hire!</button>
+        {{#ifEqual user.userType 1}}
+        <a href="../Hire/{{user._id}}" style="width: fit-content; padding: 10px; text-decoration: none;" class="buttons" id="hire-button">Hire!</a>
         {{else}}
         {{/ifEqual}}
     </div>

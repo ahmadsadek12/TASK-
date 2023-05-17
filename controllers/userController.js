@@ -20,6 +20,8 @@ const loginUser = async (req, res) => {
         const user = await User.login(email, password)
         // create a token
         const token = createToken(user._id);
+        // Store user information in the session
+        req.session.user = user;
 
         req.session.token = token;
         res.redirect('/Main');
@@ -37,22 +39,18 @@ const registerUser = async (req, res) => {
 
     try {
         const user = await User.register(firstName, lastName, email, password, c_password, userType, dob, gender, otherGender, pronouns, country, phoneNumber)
-        const token = createToken(user._id);
-
-        req.session.token = token;
 
         if (userType === "1") {
-            res.redirect('/Experience')
+            // res.redirect('/Experience')
             return res.render('Experience', { layout: 'Experience', userData: user })
         }
         else {
-            res.redirect('/Main')
+            res.redirect('/')
         }
     } catch (error) {
         alert(error.message);
         return res.status(400);
     }
-
 }
 
 // logout user
@@ -80,32 +78,8 @@ const updateUser = async (req, res) => {
     if (!user) {
         return res.status(400).json({ error: 'User not found.' })
     }
-    const token = req.session.token;
-    return res.redirect('/Main');
+    return res.redirect('/');
 }
-
-// Fetch a user
-const fetchUser = async (req, res) => {
-    const userId = req.params.id;
-    try {
-        const user = await User.findById(userId);
-        res.json(user);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error fetching user');
-    }
-}
-
-const getUserBookmarks = async (req, res) => {
-    try {
-      const decodedToken = jwt.verify(req.session.token, process.env.SECRET);
-      const user = await User.findById(decodedToken._id).populate('user_bookmarks');
-      res.render('Bookmarks', { layout: 'Bookmarks', users: user.user_bookmarks });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Error fetching user bookmarks');
-    }
-  };
 
 // Reset password (forgot password)
 const resetPassword = async (req, res) => {
@@ -157,17 +131,14 @@ const resetP = async (req, res) => {
         alert('Passwords do not match')
         return
     }
-
     if (password.length < 8) {
         alert('Passwords should be 8 or more characters')
         return
     }
-
     if (token1 !== token) {
         alert("You entered the wrong token.")
         return
     }
-
     try {
         const salt = await bcrypt.genSalt(10)
         const encryptedPassword = await bcrypt.hash(password, salt)
@@ -185,48 +156,75 @@ const resetP = async (req, res) => {
     } catch (error) { }
 }
 
-// Add bookmark
 const addBookmark = async (req, res) => {
     const { userId } = req.params;
     const { user } = req.session;
-  
+
     try {
-      const currentUser = await User.findById(user._id);
-      if (!currentUser.user_bookmarks.includes(userId)) {
-        currentUser.user_bookmarks.push(userId);
-        await currentUser.save();
-      } else {
-        return res.json({ success: true }); // Return success if the user is already bookmarked
-      }
-  
-      res.json({ success: true });
+        const currentUser = await User.findById(user._id);
+
+        if (!currentUser.user_bookmarks.includes(userId)) {
+            currentUser.user_bookmarks.push(userId);
+            await currentUser.save();
+
+            req.session.user.user_bookmarks = currentUser.user_bookmarks; // Update session data
+            await req.session.save();
+
+            // Send the updated bookmarked status in the response
+            res.json({ success: true, bookmarked: true });
+        } else {
+            res.json({ success: false, error: 'User already bookmarked', bookmarked: true });
+        }
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, error: 'Failed to add bookmark' });
+        console.error(error);
+        res.status(500).json({ success: false, error: 'Failed to add bookmark', bookmarked: false });
     }
-  };
-  
- // Remove bookmark
- const deleteBookmark = async (req, res) => {
+};
+
+const deleteBookmark = async (req, res) => {
     const { userId } = req.params;
     const { user } = req.session;
-  
-    try {
-      const currentUser = await User.findById(user._id);
-      if (currentUser.user_bookmarks.includes(userId)) {
-        currentUser.user_bookmarks = currentUser.user_bookmarks.filter(
-          (bookmarkId) => bookmarkId !== userId
-        );
-        await currentUser.save();
-      } else {
-        return res.json({ success: true }); // Return success if the user is not bookmarked
-      }
-  
-      res.json({ success: true });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, error: 'Failed to remove bookmark' });
-    }
-  };
 
-module.exports = { registerUser, loginUser, logoutUser, updateUser, fetchUser, resetPassword, resetP, getUserBookmarks, addBookmark, deleteBookmark };
+    try {
+        const currentUser = await User.findById(user._id);
+
+        if (currentUser.user_bookmarks.includes(userId)) {
+            currentUser.user_bookmarks.pull(userId);
+            await currentUser.save();
+
+            req.session.user.user_bookmarks = currentUser.user_bookmarks.pull(userId); // Update session data
+            await req.session.save();
+
+            // Send the updated bookmarked status in the response
+            res.json({ success: true, bookmarked: false });
+        } else {
+            res.json({ success: false, error: 'User is not bookmarked', bookmarked: false });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: 'Failed to remove bookmark', bookmarked: true });
+    }
+};
+
+// Fetch a user
+const fetchUser = async (req, res) => {
+    const userId = req.params.id;
+    const currentUser = req.session.user;
+    
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+        }
+        const isBookmarked = currentUser.user_bookmarks.includes(userId);
+        const userData = { ...user._doc, bookmarked: isBookmarked };
+
+        res.json(userData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: 'Error fetching user' });
+    }
+};
+
+module.exports = { registerUser, loginUser, logoutUser, updateUser, fetchUser, resetPassword, resetP, addBookmark, deleteBookmark };

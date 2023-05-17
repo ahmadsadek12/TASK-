@@ -1,8 +1,15 @@
-  <h1>Your bookmarks</h1>
+<div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
+
+  <div>
+    <table class="table manage-candidates-top mb-0" id="table">
+  </div>
+  <h1>Your Bookmarks</h1>
+
+  {{#if bookmarkedUsers.length}}
 
   <tbody>
-    {{#each users.user_bookmarks}}
-    <tr class="candidates-lbuttonsist">
+    {{#each bookmarkedUsers}}
+    <tr id="candidates-{{this._id}}" class="candidates-lbuttonsist">
       <td class="title">
         <div class="thumb">
           <a href="Profiles/{{this._id}}">
@@ -16,7 +23,8 @@
         <div class="candidate-list-details">
           <div class="candidate-list-info">
             <div class="candidate-list-title">
-              <h5 class="mb-0"><input type="radio" name="names" onclick="showPopUp(this)" id="{{this._id}}" hidden>
+              <h5 class="mb-0"><input type="radio" name="names" id="{{this._id}}"
+                  hidden>
                 <label for="{{this._id}}" class="names">{{this.firstName}} {{this.lastName}}</label>
               </h5>
             </div>
@@ -29,7 +37,7 @@
           </div>
         </div>
       </td>
-      <td class="candidate-list-favourite-time text-center">
+      <td class="candidate-list-favourite-time text-center" style="margin-left: 20px;">
         {{#ifEqual this.averageRating '0'}}
         <span class="candidate-list-time order-1" id="heart-{{this._id}}">-/5</span>
         {{else}}
@@ -57,10 +65,9 @@
       </td>
       <td>
         <ul class="list-unstyled mb-0 d-flex justify-content-end">
-          <a onclick="myFunction('{{this._id}}');" id="regular{{this.id}}" class="text-primary" data-toggle="tooltip"
-            title="" data-original-title="bookmark"><i class="fa-regular fa-bookmark"></i></a>
-          <a onclick="myFunction2('{{this.id}}')" id="solid{{this.id}}" class="text-primary" data-toggle="tooltip"
-            title="" data-original-title="bookmark" style="visibility: hidden;"><i class="fa-solid fa-bookmark"></i></a>
+          <a onclick="removeBookmark('{{this._id}}')" id="solid{{this.id}}"
+            class="text-primary" data-toggle="tooltip" title="" data-original-title="bookmark"><i style="margin-top: -5px; margin-left: -10px;"
+              class="fa-solid fa-bookmark"></i></a>
         </ul>
       </td>
     </tr>
@@ -90,23 +97,7 @@
   </nav>
   </table>
 
-  
-
-  <div id="popup" class="popup" style="display: none;">
-    <input type="radio" name="names" onclick="closePopup()" id="close" hidden>
-    <label for="close"><i class="fa-solid fa-xmark"></i></label>
-    <div class="pop-thumb">
-      <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-    </div>
-    <td class="pop-fav">
-      <span class="pop-rating" id="heart-6"></span>
-      <a class="pop-heart candidate-list-favourite order-2 text-danger"><i
-          class="fas fa-heart"></i></a>
-    </td>
-    <h5 class="pop-names"></h5>
-    <ul class="pop-information">
-      <li></li>
-      <nobr><i class="fas fa-map-marker-alt pr-1"></i><li></li></nobr>
-    </ul>
-    <button class="pop-buttons" data-user="null" onclick="hireUser(this)">Hire!</button>
-  </div>
+{{else}}
+<p>No bookmarks found.</p>
+{{/if}}
+</div>

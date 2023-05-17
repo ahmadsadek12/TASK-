@@ -113,20 +113,23 @@ userSchema.statics.login = async function (email, password) {
     return user
 }
 
-userSchema.methods.addBookmark = async function (userId) {
-    if (!this.user_bookmarks.includes(userId)) {
-      this.user_bookmarks.push(userId);
-      await this.save();
-    }
+userSchema.methods.addBookmark = async function (userId, req) {
+  if (!this.user_bookmarks.includes(userId)) {
+    this.user_bookmarks.push(userId);
+    await this.save();
+    req.session.user.user_bookmarks = this.user_bookmarks; // Update session data
+    await req.session.save(); // Save the session
   }
-  
-  // Remove a bookmarked user
-  userSchema.methods.removeBookmark = async function (userId) {
-    if (this.user_bookmarks.includes(userId)) {
-      this.user_bookmarks = this.user_bookmarks.filter((id) => id !== userId);
-      await this.save();
-    }
+}
+
+userSchema.methods.removeBookmark = async function (userId, req) {
+  if (this.user_bookmarks.includes(userId)) {
+    this.user_bookmarks = this.user_bookmarks.filter((id) => id !== userId);
+    await this.save();
+    req.session.user.user_bookmarks = this.user_bookmarks; // Update session data
+    await req.session.save(); // Save the session
   }
+}
 
 userSchema.plugin(mongoosePaginate);
 

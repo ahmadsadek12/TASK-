@@ -1,0 +1,26 @@
+<form action="/api/notification/hire" >
+<h1>Hire {{user.firstName}} {{user.lastName}}</h1>
+
+<div id="white-container">
+    <label style="font-weight: 700;" for="explanation" id="explain">Explain what you need {{user.firstName}} for.</label><br><br>
+    <textarea id="explanation" rows="7" columns="50" placeholder="Please exlpain here in details"></textarea>
+    <p id="payement">Hourly wage offer:</p>
+    <select name="wage" id="wage">
+        <option value="5$">5$</option>
+        <option value="6$">6$</option>
+        <option value="7$">7$</option>
+        <option value="8$">8$</option>
+        <option value="9$">9$</option>
+        <option value="10$">10$</option>
+        <option value="11$">11$</option>
+        <option value="12$">12$</option>
+        <option value="13$">13$</option>
+        <option value="14$">14$</option>
+        <option value="15$">15$</option>
+    </select>
+    <br><br>
+    <button class="buttons" onclick="hireUser(this)" data-user="{{user.id}}" style="margin: auto ;width: fit-content; padding: 7px; text-decoration: none;" type="button">Hire</button>
+
+
+</div>
+</form>
