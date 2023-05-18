@@ -74,13 +74,11 @@
       <td>
         <ul class="list-unstyled mb-0 d-flex justify-content-end">
           {{#if (bookmarkedUser this._id)}}
-          <a onclick="addBookmark('{{this._id}}')" id="regular{{this._id}}"
-            class="text-primary" data-toggle="tooltip" title="" data-original-title="bookmark"><i
-              class="fa-regular fa-bookmark"></i></a>
+          <a onclick="addBookmark('{{this._id}}')" id="regular{{this._id}}" class="text-primary" data-toggle="tooltip"
+            title="" data-original-title="bookmark"><i class="fa-regular fa-bookmark"></i></a>
           {{else}}
-          <a onclick="removeBookmark('{{this._id}}')" id="solid{{this._id}}"
-            class="text-primary" data-toggle="tooltip" title="" data-original-title="bookmark"><i
-              class="fa-solid fa-bookmark"></i></a>
+          <a onclick="removeBookmark('{{this._id}}')" id="solid{{this._id}}" class="text-primary" data-toggle="tooltip"
+            title="" data-original-title="bookmark"><i class="fa-solid fa-bookmark"></i></a>
           {{/if}}
         </ul>
       </td>
