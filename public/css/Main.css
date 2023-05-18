@@ -11,7 +11,6 @@ body {
 }
 
 .choices{
-    border: solid 1px black;
     border-radius: 20px;
     padding: 5px;
     margin-left: 10px;
@@ -23,12 +22,14 @@ body {
     padding-block-start: 0px;
     margin-block-end: 5px;
     display: inline-block;
-    box-shadow: 1px 1px 3px 1px rgba(78, 96, 96, 0.5);
+    color: rgb(220, 150, 70);
+    border-color:   rgb(220, 150, 70);
+    border: solid 2px;
 }
 
 input:checked + .choices{
-    color: rgb(220, 150, 70);
-    border-color:   rgb(220, 150, 70);
+    background-color: rgb(220, 150, 70);
+    color: white;
     box-shadow: 1px 1px 3px 1px rgba(220, 150, 70, 0.5);
     border: solid 2px;
 }

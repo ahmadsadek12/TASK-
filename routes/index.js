@@ -10,6 +10,7 @@ const requireAuth = require('../middleware/requireAuth')
 
 const isLoggedIn = require('../middleware/isLoggedIn');
 const { getUserReviews } = require('../controllers/reviewController');
+const { getPosting } = require('../controllers/jobController');
 
 
 // Apply requireAuth middleware to all routes except for excluded routes
@@ -41,15 +42,18 @@ router.get('/SignUp', isLoggedIn, (req, res) => {
   res.render('SignUp', { layout: 'SignUp', })
 })
 
+
+router.get('/job-posting', requireAuth, getPosting)
+
 // Routes below are protected by auth middleware
 
-router.get('/Experience', async (req, res) => {
+router.get('/Experience', requireAuth, async (req, res) => {
   const decodedToken = jwt.verify(req.session.token, process.env.SECRET);
   const user = await User.findById(decodedToken._id);
   res.render('Experience', { layout: 'Experience', userData: user })
 })
 
-router.get('/Main', async (req, res) => {
+router.get('/Main', requireAuth, async (req, res) => {
   try {
     const decodedToken = jwt.verify(req.session.token, process.env.SECRET);
     const perPage = 3; // number of items per page

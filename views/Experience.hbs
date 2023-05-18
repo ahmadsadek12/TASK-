@@ -68,8 +68,8 @@
         <input type="checkbox" value="handyperson" id="handyperson" name="experience[]" hidden>
         <label class="choices" id="handyperson-label" for="handyperson">Handyperson</label>
     </div>
+    <p id="error-message" style="color: red; display: none;">You can only select up to 5 choices.</p>
     <div class="bottomBtns">
-    <a class="buttons" style="margin-right: 10px" href="/MyProfile">My Profile</a>
     <button type="submit" class="buttons" id="signup">Save & Continue</a> 
     </div>
 </div>
@@ -84,4 +84,26 @@ experience.forEach(exp => {
     checkbox.checked = true;
   }
 });
+
+
+const maxChoices = 5;
+
+const checkboxes = document.querySelectorAll('input[type="checkbox"][name="experience[]"]');
+const errorMessage = document.getElementById('error-message');
+
+let selectedChoices = 0;
+
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    selectedChoices = document.querySelectorAll('input[type="checkbox"][name="experience[]"]:checked').length;
+
+    if (selectedChoices > maxChoices) {
+      checkbox.checked = false;
+      errorMessage.style.display = 'block';
+    } else {
+      errorMessage.style.display = 'none';
+    }
+  });
+});
+
 </script>

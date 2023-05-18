@@ -11,6 +11,7 @@ const userRoutes = require('./routes/users')
 const protectedRoutes = require('./routes/index')
 const reviewRoutes = require('./routes/reviews')
 const notificationRoutes = require('./routes/notifications')
+const postingsRoutes = require('./routes/postings')
 const User = require('./models/User');
 
 //load config
@@ -121,11 +122,22 @@ Handlebars.registerHelper('slice', function (str, start, end) {
   return str.slice(start, end);
 });
 
+// Register the capitalizeFirstLetter helper
+Handlebars.registerHelper('capitalizeFirstLetter', function (str) {
+  if (typeof str === 'string' && str.length > 0) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+  return str;
+});
+
 //Routes
 app.use('/', protectedRoutes)
 
 // Notification routes
 app.use('/api/notification', notificationRoutes)
+
+// Posting routes
+app.use('/api/posting', postingsRoutes)
 
 const PORT = process.env.PORT || 5000
 

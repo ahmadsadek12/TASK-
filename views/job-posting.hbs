@@ -1,0 +1,63 @@
+<form action="/api/posting/job" method="POST"> <!-- Added method="POST" -->
+    <h1>Post a Job</h1>
+    <div class="white-container">
+        <textarea name="jobDescription" id="explanation" rows="5" columns="100"
+            placeholder="Please explain the job you need to be done here in detail."></textarea><br>
+        <label id="payment">Hourly wage offer: &nbsp;</label>
+        <select name="hourlyWage" id="wage">
+            <option value="5$">5$</option>
+            <option value="6$">6$</option>
+            <option value="7$">7$</option>
+            <option value="8$">8$</option>
+            <option value="9$">9$</option>
+            <option value="10$">10$</option>
+            <option value="11$">11$</option>
+            <option value="12$">12$</option>
+            <option value="13$">13$</option>
+            <option value="14$">14$</option>
+            <option value="15$">15$</option>
+        </select>
+        <br><br>
+        <button class="buttons" style="margin: auto; width: fit-content; padding: 7px; text-decoration: none;"
+            type="submit">Post</button>
+    </div>
+</form>
+
+<h1>Job Postings</h1>
+<div class="white-container">
+    {{#if jobs.length}}
+    {{#each jobs}}
+    <div class="thumb">
+        <a href="Profiles/{{user}}">
+            {{#ifEqual gender 'Male'}}
+            <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+            {{else}}
+            <img class="img-fluid" id="first-img" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+            {{/ifEqual}}
+        </a>
+    </div>
+    <h5 class="mb-0 names">
+        &nbsp{{firstName}} {{lastName}}
+    </h5>
+    <form id="applyForm">
+        {{!-- <button style="float: right;" onclick="" class="buttons">Apply</button> --}}
+        <div class="candidate-list-option">
+            <ul class="information">
+                <li style="text-align: left; list-style-type: none;">
+                    <label style="font-weight: bold;"> &nbsp&nbsp&nbsp&nbsp Job Description:</label>
+                    {{this.jobDescription}}
+                </li><br>
+                <li style="text-align: left; color: green; list-style-type: none;"><label
+                        style="font-weight: bold; color: black;">&nbsp&nbsp&nbsp&nbsp Hourly Wage:</label>
+                    {{this.hourlyWage}}</li>
+            </ul>
+        </div>
+    </form>
+    <hr>
+    {{/each}}
+
+
+    {{else}}
+    <p>No postings found.</p>
+    {{/if}}
+</div>

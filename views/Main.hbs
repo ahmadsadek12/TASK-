@@ -9,11 +9,14 @@
         <input type="search" id="search" name="query" placeholder="Search...">
         <button class="buttons" type="submit">Search</button>
       </form>
+      <a href="job-posting" class="buttons" type="submit" style="margin-left: 300px; padding: 5px;">Job Postings</a>
   </div>
   <h1>All freelancers</h1>
   <input type="checkbox" id="myCountry" name="myCountry" onchange="filterByCountry(this, '{{currentUserCountry}}')"
     hidden>
-  <label style="float: left;" class="choices" for="myCountry">My country only</label><br>
+  <label style="float: left;" class="choices" for="myCountry">My country only</label>
+  {{!-- <input type="checkbox" id="sortCheckbox" hidden> --}}
+  {{!-- <label style="float: left;" class="choices" for="sortCheckbox">Sort by Nearest</label><br> --}}
 
   <tbody>
     {{#each users.docs}}
@@ -38,7 +41,13 @@
             </div>
             <div class="candidate-list-option">
               <ul class="information">
-                <li><i class="fas fa-filter pr-1"></i>{{this.experience}}</li>
+                <li>
+                  <i class="fas fa-filter pr-1"></i>
+                  {{#each this.experience}}
+                  {{capitalizeFirstLetter this}}
+                  {{#unless @last}}, {{/unless}}
+                  {{/each}}
+                </li>
                 <li><i class="fas fa-map-marker-alt pr-1"></i>&thinsp;{{this.country}}</li>
               </ul>
             </div>

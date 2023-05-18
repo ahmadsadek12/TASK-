@@ -11,13 +11,13 @@
       <fieldset class="fieldsets" required>
         <legend id="genderp">Gender</legend>
         <input type="radio" id="male-radio" value="Male" name="gender" class="genders" onchange="toggleOtherInput()"
-          {{#if userData.gender}}{{#if (eq userData.gender "Male" )}}checked{{/if}}{{/if}}>
+          checked>
         <label for="male-radio" id="male-label" class="genders">Male</label>
         <input type="radio" id="female-radio" value="Female" name="gender" class="genders" onchange="toggleOtherInput()"
-          {{#if userData.gender}}{{#if (eq userData.gender "Female" )}}checked{{/if}}{{/if}}>
+          >
         <label for="female-radio" id="female-label" class="genders">Female</label>
         <input type="radio" id="other-radio" value="Other" name="gender" class="genders" onchange="toggleOtherInput()"
-          {{#if userData.gender}}{{#if (eq userData.gender "Other" )}}checked{{/if}}{{/if}}>
+          >
         <label for="other-radio" id="other-label" class="genders">Other</label>
       </fieldset>
     </div>
@@ -40,8 +40,8 @@
     </fieldset>
     <fieldset class="fieldsets">
       <legend>Phone number:</legend>
-      <input type="tel" id="phoneNumberInput" class="intl-tel-input" value="{{userData.phoneNumber}}"
-        name="phoneNumber" style="border-radius: 20px; font-size: 16px;"  />
+      <input type="tel" id="phoneNumberInput" class="intl-tel-input" value="{{userData.phoneNumber}}" name="phoneNumber"
+        style="border-radius: 20px; font-size: 16px;" />
     </fieldset>
     <div class="bottomBtns">
       <a class="buttons" style="margin-right: 10px; text-decoration: none;" href="/Main">Home</a>
