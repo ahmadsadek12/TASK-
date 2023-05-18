@@ -41,7 +41,6 @@ const registerUser = async (req, res) => {
         const user = await User.register(firstName, lastName, email, password, c_password, userType, dob, gender, otherGender, pronouns, country, phoneNumber)
 
         if (userType === "1") {
-            // res.redirect('/Experience')
             return res.render('Experience', { layout: 'Experience', userData: user })
         }
         else {
@@ -167,10 +166,9 @@ const addBookmark = async (req, res) => {
             currentUser.user_bookmarks.push(userId);
             await currentUser.save();
 
-            req.session.user.user_bookmarks = currentUser.user_bookmarks; // Update session data
+            req.session.user.user_bookmarks = currentUser.user_bookmarks;
             await req.session.save();
 
-            // Send the updated bookmarked status in the response
             res.json({ success: true, bookmarked: true });
         } else {
             res.json({ success: false, error: 'User already bookmarked', bookmarked: true });
@@ -195,7 +193,6 @@ const deleteBookmark = async (req, res) => {
             req.session.user.user_bookmarks = currentUser.user_bookmarks.pull(userId); // Update session data
             await req.session.save();
 
-            // Send the updated bookmarked status in the response
             res.json({ success: true, bookmarked: false });
         } else {
             res.json({ success: false, error: 'User is not bookmarked', bookmarked: false });

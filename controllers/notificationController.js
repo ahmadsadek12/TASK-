@@ -37,8 +37,8 @@ const hireNotification = async (req, res) => {
       is_pending: true,
       is_approved: false,
       is_rejected: false,
-      work_request: req.body.explanation, // Add work_request field from request body
-      offer: req.body.wage // Add offer field from request body
+      work_request: req.body.explanation, 
+      offer: req.body.wage 
     });
 
     res.status(201).json({ notification });

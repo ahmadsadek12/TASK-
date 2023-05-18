@@ -8,8 +8,7 @@ const jobPosting = async (req, res) => {
     try {
         const currentUser = await User.findById(user._id);
         const { jobDescription, hourlyWage } = req.body;
-        const userId = currentUser.id; // Assuming you have the user's ID stored in the session
-
+        const userId = currentUser.id; 
         const jobPosting = await JobPosting.create({
             user: userId,
             gender : currentUser.gender,
